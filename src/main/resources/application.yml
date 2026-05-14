@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: hive-sampling-mock
+
+server:
+  port: 8080
+
+logging:
+  level:
+    com.example.hivesampling: INFO
+
+sampling:
+  shard-size: 5
+  planned-rows-per-run: 1000
+  max-attempts-per-shard: 3
+  worker-pool-size: 4
