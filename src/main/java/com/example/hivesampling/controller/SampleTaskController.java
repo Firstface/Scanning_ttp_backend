@@ -29,6 +29,11 @@ public class SampleTaskController {
         this.sampleTaskService = sampleTaskService;
     }
 
+    @GetMapping
+    public List<TaskContext> list() {
+        return sampleTaskService.getAllTasks();
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public TaskContext create(@Valid @RequestBody CreateSampleTaskRequest request) {

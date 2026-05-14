@@ -56,4 +56,8 @@ public class SampleTaskService {
         getTask(taskId);
         return taskLogService.list(taskId);
     }
+
+    public List<TaskContext> getAllTasks() {
+        return taskRepository.findAll().stream().toList();
+    }
 }
