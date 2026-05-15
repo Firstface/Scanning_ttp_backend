@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SqlBuilderService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">hive-sampling-mock</a> &gt; <a href="index.source.html" class="el_package">com.example.hivesampling.service</a> &gt; <span class="el_source">SqlBuilderService.java</span></div><h1>SqlBuilderService.java</h1><pre class="source lang-java linenums">package com.example.hivesampling.service;
+
+import com.example.hivesampling.model.ShardTask;
+import com.example.hivesampling.model.TaskContext;
+import org.springframework.stereotype.Service;
+
+import java.util.stream.Collectors;
+
+@Service
+<span class="nc" id="L10">public class SqlBuilderService {</span>
+
+    public String buildInnerSql(TaskContext context, ShardTask shard) {
+<span class="nc" id="L13">        String partitions = shard.partitionGroup.stream()</span>
+<span class="nc" id="L14">                .map(value -&gt; &quot;'&quot; + value + &quot;'&quot;)</span>
+<span class="nc" id="L15">                .collect(Collectors.joining(&quot;, &quot;));</span>
+<span class="nc bnc" id="L16" title="All 2 branches missed.">        String offsetPart = shard.offset &gt; 0 ? &quot; OFFSET &quot; + shard.offset : &quot;&quot;;</span>
+<span class="nc" id="L17">        return &quot;SELECT *\n&quot;</span>
+                + &quot;FROM &quot; + context.databaseName + &quot;.&quot; + context.tableName + &quot;\n&quot;
+                + &quot;WHERE dt IN (&quot; + partitions + &quot;)\n&quot;
+                + &quot;LIMIT &quot; + shard.plannedRowsPerRun + offsetPart;
+    }
+
+    public String buildFinalSql(String innerSql) {
+<span class="nc" id="L24">        return &quot;WITH table_rows AS (\n&quot;</span>
+                + innerSql + &quot;\n&quot;
+                + &quot;)\n&quot;
+                + &quot;INSERT INTO mock_result_table\n&quot;
+                + &quot;SELECT * FROM table_rows&quot;;
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

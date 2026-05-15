@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RetrieveMetaInfosExecutor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">hive-sampling-mock</a> &gt; <a href="index.source.html" class="el_package">com.example.hivesampling.executor</a> &gt; <span class="el_source">RetrieveMetaInfosExecutor.java</span></div><h1>RetrieveMetaInfosExecutor.java</h1><pre class="source lang-java linenums">package com.example.hivesampling.executor;
+
+import com.example.hivesampling.model.ExecutorResult;
+import com.example.hivesampling.model.TableMetadata;
+import com.example.hivesampling.model.TaskContext;
+import com.example.hivesampling.pipeline.SampleTaskExecutor;
+import com.example.hivesampling.service.TaskLogService;
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.Random;
+
+@Order(1)
+@Component
+public class RetrieveMetaInfosExecutor implements SampleTaskExecutor {
+
+    private final TaskLogService taskLogService;
+
+<span class="nc" id="L20">    public RetrieveMetaInfosExecutor(TaskLogService taskLogService) {</span>
+<span class="nc" id="L21">        this.taskLogService = taskLogService;</span>
+<span class="nc" id="L22">    }</span>
+
+    @Override
+    public ExecutorResult execute(TaskContext context) {
+<span class="nc" id="L26">        randomDelay();</span>
+<span class="nc" id="L27">        TableMetadata metadata = new TableMetadata();</span>
+<span class="nc" id="L28">        metadata.columns = List.of(&quot;user_id&quot;, &quot;event_name&quot;, &quot;event_time&quot;, &quot;device_type&quot;, &quot;dt&quot;);</span>
+<span class="nc" id="L29">        metadata.partitionColumns = List.of(&quot;dt&quot;);</span>
+<span class="nc" id="L30">        metadata.tableType = &quot;MANAGED_TABLE&quot;;</span>
+<span class="nc" id="L31">        context.metadata = metadata;</span>
+<span class="nc" id="L32">        taskLogService.info(context.taskId, &quot;RetrieveMetaInfosExecutor loaded 5 columns and 1 partition column&quot;);</span>
+<span class="nc" id="L33">        return ExecutorResult.success(</span>
+<span class="nc" id="L34">                name(),</span>
+                &quot;Mock table metadata and schema&quot;,
+                &quot;columns=5, partitionColumns=1, tableType=&quot; + metadata.tableType);
+    }
+
+    private void randomDelay() {
+        try {
+<span class="nc" id="L41">            Thread.sleep(500 + new Random().nextInt(1000));</span>
+<span class="nc" id="L42">        } catch (InterruptedException e) {</span>
+<span class="nc" id="L43">            Thread.currentThread().interrupt();</span>
+<span class="nc" id="L44">        }</span>
+<span class="nc" id="L45">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

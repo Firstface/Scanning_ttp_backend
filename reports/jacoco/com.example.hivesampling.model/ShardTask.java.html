@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ShardTask.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">hive-sampling-mock</a> &gt; <a href="index.source.html" class="el_package">com.example.hivesampling.model</a> &gt; <span class="el_source">ShardTask.java</span></div><h1>ShardTask.java</h1><pre class="source lang-java linenums">package com.example.hivesampling.model;
+
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+<span class="nc" id="L8">public class ShardTask {</span>
+
+    public String shardId;
+<span class="nc" id="L11">    public List&lt;String&gt; partitionGroup = new ArrayList&lt;&gt;();</span>
+    public String partitionName;
+    public int plannedRowsPerRun;
+    public long sampledRows;
+    public long offset;
+    public long lastRunRows;
+    public String innerSql;
+    public String finalSql;
+    public String sqlPreview;
+<span class="nc" id="L20">    public ShardTaskStatus status = ShardTaskStatus.QUEUED;</span>
+    public int attemptCount;
+    public boolean resultCollected;
+    public String message;
+<span class="nc" id="L24">    public Instant createdAt = Instant.now();</span>
+<span class="nc" id="L25">    public Instant updatedAt = Instant.now();</span>
+
+    public void changeStatus(ShardTaskStatus nextStatus) {
+<span class="nc" id="L28">        this.status = nextStatus;</span>
+<span class="nc" id="L29">        this.updatedAt = Instant.now();</span>
+<span class="nc" id="L30">    }</span>
+
+    public String getPartitionName() {
+<span class="nc bnc" id="L33" title="All 4 branches missed.">        if (partitionName != null &amp;&amp; !partitionName.isEmpty()) {</span>
+<span class="nc" id="L34">            return partitionName;</span>
+        }
+<span class="nc bnc" id="L36" title="All 4 branches missed.">        if (partitionGroup != null &amp;&amp; !partitionGroup.isEmpty()) {</span>
+<span class="nc" id="L37">            return partitionGroup.stream()</span>
+<span class="nc" id="L38">                .map(p -&gt; &quot;dt=&quot; + p)</span>
+<span class="nc" id="L39">                .collect(Collectors.joining(&quot;, &quot;));</span>
+        }
+<span class="nc" id="L41">        return &quot;&quot;;</span>
+    }
+
+    public void setPartitionName(String partitionName) {
+<span class="nc" id="L45">        this.partitionName = partitionName;</span>
+<span class="nc" id="L46">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

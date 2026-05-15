@@ -10,6 +10,7 @@ help:
 	@echo "  make test        - Run all tests"
 	@echo "  make it          - Run integration tests"
 	@echo "  make e2e         - Run E2E tests"
+	@echo "  make pre-push    - Run pre-push checks"
 	@echo "  make reset       - Reset everything (down + up)"
 	@echo "  make build       - Build all Docker images"
 	@echo "  make certs       - Generate self-signed HTTPS certificates"
@@ -50,6 +51,16 @@ e2e:
 	@echo "E2E Tests: This will be implemented with Playwright"
 	@echo "Running E2E tests..."
 	@cd tests/e2e && npx playwright test || true
+
+# Pre-push checks
+.PHONY: pre-push
+pre-push:
+	@echo "→ Pre-push checks"
+	@echo "  - Unit tests"
+	@mvn -q test
+	@echo "  - Integration tests"
+	@mvn -q verify -DskipUTs -Dspring.profiles.active=dev
+	@echo "✅ Pre-push OK, can git push"
 
 # Reset everything
 .PHONY: reset

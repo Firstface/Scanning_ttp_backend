@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SampleTaskService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">hive-sampling-mock</a> &gt; <a href="index.source.html" class="el_package">com.example.hivesampling.service</a> &gt; <span class="el_source">SampleTaskService.java</span></div><h1>SampleTaskService.java</h1><pre class="source lang-java linenums">package com.example.hivesampling.service;
+
+import com.example.hivesampling.dto.CreateSampleTaskRequest;
+import com.example.hivesampling.model.LogEntry;
+import com.example.hivesampling.model.ParentTaskStatus;
+import com.example.hivesampling.model.ShardTask;
+import com.example.hivesampling.model.TaskContext;
+import com.example.hivesampling.pipeline.PipelineRunner;
+import com.example.hivesampling.repository.InMemoryTaskRepository;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.UUID;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+@Service
+public class SampleTaskService {
+
+    private final InMemoryTaskRepository taskRepository;
+    private final PipelineRunner pipelineRunner;
+    private final TaskLogService taskLogService;
+<span class="nc" id="L24">    private final ExecutorService executorService = Executors.newCachedThreadPool();</span>
+
+    public SampleTaskService(InMemoryTaskRepository taskRepository,
+                             PipelineRunner pipelineRunner,
+<span class="nc" id="L28">                             TaskLogService taskLogService) {</span>
+<span class="nc" id="L29">        this.taskRepository = taskRepository;</span>
+<span class="nc" id="L30">        this.pipelineRunner = pipelineRunner;</span>
+<span class="nc" id="L31">        this.taskLogService = taskLogService;</span>
+<span class="nc" id="L32">    }</span>
+
+    public TaskContext createAndStart(CreateSampleTaskRequest request) {
+<span class="nc" id="L35">        TaskContext context = new TaskContext();</span>
+<span class="nc" id="L36">        context.taskId = UUID.randomUUID().toString();</span>
+<span class="nc" id="L37">        context.databaseName = request.databaseName;</span>
+<span class="nc" id="L38">        context.tableName = request.tableName;</span>
+<span class="nc" id="L39">        context.targetSampleRows = request.targetSampleRows;</span>
+<span class="nc" id="L40">        context.selectedPartitions = request.selectedPartitions;</span>
+<span class="nc" id="L41">        context.changeStatus(ParentTaskStatus.CREATED);</span>
+<span class="nc" id="L42">        taskRepository.save(context);</span>
+
+<span class="nc" id="L44">        taskLogService.info(context.taskId, &quot;Parent task created&quot;);</span>
+        
+        // Initialize pipeline state immediately
+<span class="nc" id="L47">        context.initializePipelineState();</span>
+<span class="nc" id="L48">        taskRepository.save(context);</span>
+        
+        // Run pipeline asynchronously
+<span class="nc" id="L51">        executorService.submit(() -&gt; {</span>
+            try {
+<span class="nc" id="L53">                pipelineRunner.run(context);</span>
+            } finally {
+<span class="nc" id="L55">                taskRepository.save(context);</span>
+            }
+<span class="nc" id="L57">        });</span>
+        
+<span class="nc" id="L59">        return context;</span>
+    }
+
+    public TaskContext getTask(String taskId) {
+<span class="nc" id="L63">        return taskRepository.findById(taskId)</span>
+<span class="nc" id="L64">                .orElseThrow(() -&gt; new NoSuchElementException(&quot;Task not found: &quot; + taskId));</span>
+    }
+
+    public List&lt;ShardTask&gt; getShards(String taskId) {
+<span class="nc" id="L68">        return getTask(taskId).shards;</span>
+    }
+
+    public List&lt;LogEntry&gt; getLogs(String taskId) {
+<span class="nc" id="L72">        getTask(taskId);</span>
+<span class="nc" id="L73">        return taskLogService.list(taskId);</span>
+    }
+
+    public List&lt;TaskContext&gt; getAllTasks() {
+<span class="nc" id="L77">        return taskRepository.findAll().stream().toList();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
