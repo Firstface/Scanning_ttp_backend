@@ -169,13 +169,8 @@ jobs:
         with:
           target: http://localhost:8080
           cmd_options: '-I'
+          artifact_name: zap-report
         continue-on-error: true
-
-      - name: Upload ZAP Report
-        uses: actions/upload-artifact@v5
-        with:
-          name: zap-report
-          path: zap-full-scan-report.html
 
       - name: Cleanup
         if: always()
