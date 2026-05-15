@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Order(4)
 @Component
@@ -26,6 +27,7 @@ public class FinalQueryBuilderExecutor implements SampleTaskExecutor {
 
     @Override
     public ExecutorResult execute(TaskContext context) {
+        randomDelay();
         List<String> finalSqls = new ArrayList<>();
         for (ShardTask shard : context.shards) {
             shard.finalSql = sqlBuilderService.buildFinalSql(shard.innerSql);
@@ -38,5 +40,13 @@ public class FinalQueryBuilderExecutor implements SampleTaskExecutor {
                 name(),
                 "Wrap inner SQL into final executable SQL",
                 "finalSqls=" + finalSqls.size());
+    }
+
+    private void randomDelay() {
+        try {
+            Thread.sleep(500 + new Random().nextInt(1000));
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
     }
 }

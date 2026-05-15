@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Order(3)
 @Component
@@ -35,18 +36,23 @@ public class SamplingExecutor implements SampleTaskExecutor {
 
     @Override
     public ExecutorResult execute(TaskContext context) {
+        randomDelay();
         List<ShardTask> shards = new ArrayList<>();
-        int shardIndex = 1;
-        for (int start = 0; start < context.selectedPartitions.size(); start += shardSize) {
+        int numShards = 3; // Create 3 shards for demonstration
+        
+        for (int i = 1; i <= numShards; i++) {
             ShardTask shard = new ShardTask();
-            shard.shardId = context.taskId + "-shard-" + shardIndex++;
-            shard.partitionGroup = new ArrayList<>(context.selectedPartitions.subList(
-                    start, Math.min(start + shardSize, context.selectedPartitions.size())));
+            shard.shardId = context.taskId + "-shard-" + i;
+            // Assign 1 partition per shard
+            int startIdx = (i - 1) * 1;
+            int endIdx = Math.min(startIdx + 1, context.selectedPartitions.size());
+            shard.partitionGroup = new ArrayList<>(context.selectedPartitions.subList(startIdx, endIdx));
             shard.plannedRowsPerRun = plannedRowsPerRun;
             shard.innerSql = sqlBuilderService.buildInnerSql(context, shard);
             shard.sqlPreview = shard.innerSql;
             shards.add(shard);
         }
+        
         context.shards = shards;
         taskLogService.info(context.taskId, "SamplingExecutor created " + shards.size() + " shards");
         if (shards.isEmpty()) {
@@ -56,5 +62,13 @@ public class SamplingExecutor implements SampleTaskExecutor {
                 name(),
                 "Split partitions into shards and build inner SQL",
                 "shards=" + shards.size() + ", plannedRowsPerRun=" + plannedRowsPerRun);
+    }
+
+    private void randomDelay() {
+        try {
+            Thread.sleep(500 + new Random().nextInt(1000));
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
     }
 }

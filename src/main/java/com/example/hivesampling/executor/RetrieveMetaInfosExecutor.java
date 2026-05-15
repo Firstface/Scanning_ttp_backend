@@ -9,6 +9,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Random;
 
 @Order(1)
 @Component
@@ -22,6 +23,7 @@ public class RetrieveMetaInfosExecutor implements SampleTaskExecutor {
 
     @Override
     public ExecutorResult execute(TaskContext context) {
+        randomDelay();
         TableMetadata metadata = new TableMetadata();
         metadata.columns = List.of("user_id", "event_name", "event_time", "device_type", "dt");
         metadata.partitionColumns = List.of("dt");
@@ -32,5 +34,13 @@ public class RetrieveMetaInfosExecutor implements SampleTaskExecutor {
                 name(),
                 "Mock table metadata and schema",
                 "columns=5, partitionColumns=1, tableType=" + metadata.tableType);
+    }
+
+    private void randomDelay() {
+        try {
+            Thread.sleep(500 + new Random().nextInt(1000));
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
     }
 }

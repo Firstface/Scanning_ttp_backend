@@ -1,7 +1,8 @@
 package com.example.hivesampling.controller;
 
 import com.example.hivesampling.dto.CreateSampleTaskRequest;
-import com.example.hivesampling.model.ExecutorResult;
+import com.example.hivesampling.model.LogEntry;
+import com.example.hivesampling.model.PipelineState;
 import com.example.hivesampling.model.ShardTask;
 import com.example.hivesampling.model.TaskContext;
 import com.example.hivesampling.service.SampleTaskService;
@@ -55,12 +56,16 @@ public class SampleTaskController {
     }
 
     @GetMapping("/{taskId}/pipeline")
-    public List<ExecutorResult> getPipeline(@PathVariable String taskId) {
-        return findTask(taskId).pipelineResults;
+    public PipelineState getPipeline(@PathVariable String taskId) {
+        TaskContext task = findTask(taskId);
+        if (task.pipelineState != null) {
+            return task.pipelineState;
+        }
+        return PipelineState.initialize(task.taskId, task.status);
     }
 
     @GetMapping("/{taskId}/logs")
-    public List<String> getLogs(@PathVariable String taskId) {
+    public List<LogEntry> getLogs(@PathVariable String taskId) {
         try {
             return sampleTaskService.getLogs(taskId);
         } catch (NoSuchElementException e) {

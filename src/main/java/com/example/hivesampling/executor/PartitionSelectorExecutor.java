@@ -8,6 +8,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Random;
 
 @Order(2)
 @Component
@@ -21,6 +22,7 @@ public class PartitionSelectorExecutor implements SampleTaskExecutor {
 
     @Override
     public ExecutorResult execute(TaskContext context) {
+        randomDelay();
         if (context.selectedPartitions == null || context.selectedPartitions.isEmpty()) {
             context.selectedPartitions = List.of(
                     "2026-05-01", "2026-05-02", "2026-05-03", "2026-05-04", "2026-05-05",
@@ -33,5 +35,13 @@ public class PartitionSelectorExecutor implements SampleTaskExecutor {
                 name(),
                 "Select partitions for sampling",
                 "selectedPartitions=" + context.selectedPartitions.size());
+    }
+
+    private void randomDelay() {
+        try {
+            Thread.sleep(500 + new Random().nextInt(1000));
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
     }
 }

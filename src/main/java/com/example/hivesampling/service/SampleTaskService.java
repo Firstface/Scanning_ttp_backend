@@ -1,6 +1,7 @@
 package com.example.hivesampling.service;
 
 import com.example.hivesampling.dto.CreateSampleTaskRequest;
+import com.example.hivesampling.model.LogEntry;
 import com.example.hivesampling.model.ParentTaskStatus;
 import com.example.hivesampling.model.ShardTask;
 import com.example.hivesampling.model.TaskContext;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Service
 public class SampleTaskService {
@@ -18,6 +21,7 @@ public class SampleTaskService {
     private final InMemoryTaskRepository taskRepository;
     private final PipelineRunner pipelineRunner;
     private final TaskLogService taskLogService;
+    private final ExecutorService executorService = Executors.newCachedThreadPool();
 
     public SampleTaskService(InMemoryTaskRepository taskRepository,
                              PipelineRunner pipelineRunner,
@@ -38,8 +42,20 @@ public class SampleTaskService {
         taskRepository.save(context);
 
         taskLogService.info(context.taskId, "Parent task created");
-        pipelineRunner.run(context);
+        
+        // Initialize pipeline state immediately
+        context.initializePipelineState();
         taskRepository.save(context);
+        
+        // Run pipeline asynchronously
+        executorService.submit(() -> {
+            try {
+                pipelineRunner.run(context);
+            } finally {
+                taskRepository.save(context);
+            }
+        });
+        
         return context;
     }
 
@@ -52,7 +68,7 @@ public class SampleTaskService {
         return getTask(taskId).shards;
     }
 
-    public List<String> getLogs(String taskId) {
+    public List<LogEntry> getLogs(String taskId) {
         getTask(taskId);
         return taskLogService.list(taskId);
     }
