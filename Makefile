@@ -8,9 +8,11 @@ help:
 	@echo "  make down        - Stop all services"
 	@echo "  make logs        - Show service logs"
 	@echo "  make test        - Run all tests"
+	@echo "  make it          - Run integration tests"
 	@echo "  make e2e         - Run E2E tests"
 	@echo "  make reset       - Reset everything (down + up)"
 	@echo "  make build       - Build all Docker images"
+	@echo "  make certs       - Generate self-signed HTTPS certificates"
 	@echo ""
 
 # Start all services
@@ -37,6 +39,11 @@ logs:
 test:
 	@mvn clean test jacoco:report
 
+# Run integration tests
+.PHONY: it
+it:
+	@mvn verify -DskipUTs
+
 # Run E2E tests (requires running services)
 .PHONY: e2e
 e2e:
@@ -54,3 +61,10 @@ reset: down
 .PHONY: build
 build:
 	@cd deploy && docker-compose build --no-cache
+
+# Generate HTTPS certificates
+.PHONY: certs
+certs:
+	@echo "Generating self-signed HTTPS certificates..."
+	@mkdir -p deploy/nginx-proxy/certs
+	@cd deploy/nginx-proxy/certs && mkcert -install && mkcert localhost

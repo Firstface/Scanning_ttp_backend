@@ -1,10 +1,10 @@
-package com.example.hivesampling.repository;
+package com.example.hivesampling.integration;
 
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class InMemoryTaskRepositoryTest {
+class TaskFullFlowIT {
 
     @Test
     void simpleTest() {

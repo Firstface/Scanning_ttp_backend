@@ -1,0 +1,16 @@
+
+2026-05-15T11:25:00+08:00	INFO	Detected OS: alpine
+2026-05-15T11:25:00+08:00	INFO	Detecting Alpine vulnerabilities...
+2026-05-15T11:25:00+08:00	INFO	Number of language-specific files: 0
+
+scanning-ttp-backend:local (alpine 3.19.1)
+==========================================
+Total: 3 (HIGH: 3, CRITICAL: 0)
+
+┌─────────────────┬────────────────┬──────────┬───────────────────┬───────────────┬──────────────────────────────────────────────────────────────┐
+│     Library     │ Vulnerability  │ Severity │ Installed Version │ Fixed Version │                           Title                            │
+├─────────────────┼────────────────┼──────────┼───────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ libcrypto3      │ CVE-2024-2231 │ HIGH     │ 3.1.4-r5          │ 3.1.5-r0      │ Invalid PKCS12 files can cause NULL dereference            │
+│ libssl3         │ CVE-2024-2231 │ HIGH     │ 3.1.4-r5          │ 3.1.5-r0      │ Invalid PKCS12 files can cause NULL dereference            │
+│ busybox         │ CVE-2024-1102 │ HIGH     │ 1.36.1-r15        │ 1.36.1-r17    │ Stack-based buffer overflow in httpd function               │
+└─────────────────┴────────────────┴──────────┴───────────────────┴───────────────┴──────────────────────────────────────────────────────────────┘

@@ -22,9 +22,20 @@ services:
     build:
       context: ../../Scanning_ttp_frontend
       dockerfile: Dockerfile
-    ports:
-      - "3000:80"
     depends_on:
+      - backend
+    networks:
+      - scanning-network
+    restart: unless-stopped
+
+  nginx-proxy:
+    build:
+      context: ./nginx-proxy
+      dockerfile: Dockerfile
+    ports:
+      - "443:443"
+    depends_on:
+      - frontend
       - backend
     networks:
       - scanning-network

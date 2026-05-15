@@ -1,0 +1,1 @@
+{"results": [{"check_id": "java.lang.security.audit.hardcoded-secret.hardcoded-secret", "path": "src/main/resources/application.yml", "start": {"line": 25, "col": 11}, "end": {"line": 25, "col": 57}, "extra": {"severity": "WARNING", "message": "Hardcoded secret found"}}], "version": "1.0.0"}

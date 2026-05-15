@@ -14,3 +14,16 @@ sampling:
   planned-rows-per-run: 1000
   max-attempts-per-shard: 3
   worker-pool-size: 4
+
+# Demo Account & JWT Configuration
+app:
+  auth:
+    enabled: true
+    username: admin
+    password: admin123
+    jwt:
+      secret: my-secret-key-for-demo-purposes-at-least-256-bits-long
+      expiration: 3600000  # 1 hour in milliseconds
+  rate-limit:
+    enabled: true
+    requests-per-minute: 60

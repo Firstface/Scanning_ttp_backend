@@ -1,0 +1,5 @@
+app:
+  auth:
+    enabled: false
+  rate-limit:
+    enabled: false

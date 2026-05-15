@@ -13,7 +13,11 @@
 
 ## Quick Start (Docker Compose)
 
+### HTTPS Mode (Recommended for Demo)
 ```bash
+# First, generate self-signed certificates
+make certs
+
 # Option 1: Use Make (recommended)
 make up
 
@@ -24,22 +28,60 @@ docker-compose up -d --build
 # Wait for services to be ready (~30 sec)
 
 # Access the system:
+# HTTPS Frontend: https://localhost
 # Backend: http://localhost:8080
-# Frontend: http://localhost:80
 # Health Check: http://localhost:8080/actuator/health
 ```
+
+### Notes on HTTPS Certificates
+- `make certs` requires [mkcert](https://github.com/FiloSottile/mkcert) to be installed
+- Certificates are stored in `deploy/nginx-proxy/certs/`
+- Browsers will show a padlock icon for HTTPS
+
+---
+
+## Authentication
+
+### Demo Credentials
+| Username | Password |
+|----------|----------|
+| `admin` | `admin123` |
+
+### Login to Get JWT Token
+```bash
+curl -X POST 'http://localhost:8080/auth/login' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "username": "admin",
+    "password": "admin123"
+  }'
+```
+
+### Use JWT Token for API Requests
+```bash
+curl -X POST 'http://localhost:8080/api/sample-tasks' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer YOUR_TOKEN_HERE' \
+  -d '{...}'
+```
+
+### Disable Authentication (Dev Mode)
+Set `app.auth.enabled=false` in `application.yml` or use `SPRING_PROFILES_ACTIVE=dev`
 
 ---
 
 ## What's Included (Capstone Deliverables)
 
 ### Backend-Focused DevOps Features
-- ✅ **Containerization**: Docker + Docker Compose
+- ✅ **Containerization**: Docker + Docker Compose + HTTPS Proxy
 - ✅ **CI/CD Pipeline**: GitHub Actions (ci.yml, cd.yml, rollback.yml)
 - ✅ **Unit Tests**: JUnit + JaCoCo coverage
+- ✅ **Integration Tests**: TestRestTemplate full-flow tests
 - ✅ **E2E Tests**: Playwright API tests
 - ✅ **Load Tests**: k6 performance tests
 - ✅ **Security Scans**: Semgrep, Gitleaks, Trivy, OWASP ZAP
+- ✅ **JWT Authentication**: HS256 tokens with 1h expiration
+- ✅ **Rate Limiting**: Bucket4j (60 req/min per IP)
 - ✅ **IaC**: Terraform (kreuzwerker/docker provider)
 - ✅ **Demo Scripts**: Presentation-ready 4.5 min scripts
 
@@ -149,9 +191,11 @@ Scanning_ttp-1/
 | `make up` | Start all services with Docker Compose |
 | `make down` | Stop all services |
 | `make logs` | Tail service logs |
-| `make test` | Run tests + coverage |
+| `make test` | Run unit tests + coverage |
+| `make it` | Run integration tests only |
 | `make reset` | Full reset (clean + restart) |
 | `make build` | Build all images |
+| `make certs` | Generate HTTPS certificates (requires mkcert) |
 
 ---
 
