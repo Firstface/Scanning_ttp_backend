@@ -1,0 +1,19 @@
+flowchart LR
+    User[End User] -->|80| Nginx
+    
+    subgraph Host [Docker Host]
+        Network[Docker Network]
+        
+        subgraph Services
+            Nginx[Frontend Nginx<br/>80]
+            Backend[Spring Boot<br/>8080]
+        end
+    end
+    
+    Nginx -->|API Call| Backend
+    
+    Backend -.->|Store| TaskStore[(In-Memory Task Store)]
+    Backend -.->|Log| LogStore[(In-Memory Logs)]
+    
+    Backend -->|Execute| Pipeline[Executor Pipeline]
+    Pipeline -->|7 Steps| Result[Finalize Task]

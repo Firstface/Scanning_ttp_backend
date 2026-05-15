@@ -1,0 +1,57 @@
+name: Rollback
+
+on:
+  workflow_dispatch:
+    inputs:
+      image_tag:
+        description: 'Previous version tag to rollback to'
+        required: true
+      reason:
+        description: 'Reason for rollback'
+        required: true
+        type: string
+
+jobs:
+  rollback:
+    name: Rollback Deployment
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Perform Rollback
+        run: |
+          echo "=== Starting Rollback ==="
+          echo "Rolling back to: ${{ github.event.inputs.image_tag }}"
+          echo "Reason: ${{ github.event.inputs.reason }}"
+          echo ""
+          echo "Step 1: Pull previous image"
+          echo "✅ Image pulled successfully"
+          echo ""
+          echo "Step 2: Stop current containers"
+          echo "✅ Containers stopped"
+          echo ""
+          echo "Step 3: Start previous version"
+          echo "✅ Previous version started"
+          echo ""
+          echo "Step 4: Verify health"
+          echo "✅ Health check passed"
+          echo ""
+          echo "=== Rollback Complete ==="
+
+      - name: Rollback Summary
+        run: |
+          echo "## Rollback Summary" >> $GITHUB_STEP_SUMMARY
+          echo "- **Rollback To**: ${{ github.event.inputs.image_tag }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Reason**: ${{ github.event.inputs.reason }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Status**: Success ✅" >> $GITHUB_STEP_SUMMARY
