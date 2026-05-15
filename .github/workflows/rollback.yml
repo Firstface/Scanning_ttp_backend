@@ -32,7 +32,7 @@ jobs:
       - name: Perform Rollback
         run: |
           echo "=== Starting Rollback ==="
-          echo "Rolling back to: ${{ github.event.inputs.image_tag }}"
+          echo "Rolling back to: ghcr.io/firstface/scanning_ttp_backend:${{ github.event.inputs.image_tag }}"
           echo "Reason: ${{ github.event.inputs.reason }}"
           echo ""
           echo "Step 1: Pull previous image"

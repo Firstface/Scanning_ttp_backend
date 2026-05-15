@@ -114,20 +114,24 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Lowercase repo name
+        id: repo
+        run: echo "name=$(echo '${{ github.repository }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
           context: .
           push: true
-          tags: ghcr.io/${{ github.repository }}:${{ github.sha }},ghcr.io/${{ github.repository }}:latest
+          tags: ghcr.io/${{ steps.repo.outputs.name }}:${{ github.sha }},ghcr.io/${{ steps.repo.outputs.name }}:latest
           labels: |
             org.opencontainers.image.revision=${{ github.sha }}
-            org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
+            org.opencontainers.image.source=${{ github.server_url }}/${{ steps.repo.outputs.name }}
 
       - name: Run Trivy Vulnerability Scan
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: ghcr.io/${{ github.repository }}:${{ github.sha }}
+          image-ref: ghcr.io/${{ steps.repo.outputs.name }}:${{ github.sha }}
           format: 'sarif'
           output: 'trivy-results.sarif'
 
@@ -144,7 +148,7 @@ jobs:
     if: github.event_name == 'workflow_dispatch'
     services:
       backend:
-        image: ghcr.io/${{ github.repository }}:${{ github.sha }}
+        image: ghcr.io/firstface/scanning_ttp_backend:${{ github.sha }}
         ports:
           - 8080:8080
         env:
@@ -178,7 +182,7 @@ jobs:
     if: github.event_name == 'workflow_dispatch'
     services:
       backend:
-        image: ghcr.io/${{ github.repository }}:${{ github.sha }}
+        image: ghcr.io/firstface/scanning_ttp_backend:${{ github.sha }}
         ports:
           - 8080:8080
         env:
