@@ -1,0 +1,15 @@
+[allowlist]
+description = "Demo / test fixtures"
+paths = [
+  '''application-dev\.yml''',
+  '''src/test/.*''',
+  '''docs/.*''',
+  '''README\.md''',
+  '''application\.yml''',
+  '''\.env\.example'''
+]
+regexes = [
+  '''admin123''',
+  '''demo-secret-.*''',
+  '''my-secret-key-for-demo-purposes.*'''
+]
