@@ -131,7 +131,7 @@ jobs:
             org.opencontainers.image.source=${{ github.server_url }}/${{ steps.repo.outputs.name }}
 
       - name: Run Trivy Vulnerability Scan
-        uses: aquasecurity/trivy-action@0.28.0
+        uses: aquasecurity/trivy-action@master
         with:
           image-ref: ghcr.io/${{ steps.repo.outputs.name }}:${{ github.sha }}
           format: 'sarif'
