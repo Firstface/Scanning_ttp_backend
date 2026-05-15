@@ -7,7 +7,14 @@ import static org.junit.jupiter.api.Assertions.*;
 class PartitionSelectorExecutorTest {
 
     @Test
-    void simpleTest() {
-        assertTrue(true);
+    void name_ShouldReturnCorrectName() {
+        PartitionSelectorExecutor executor = new PartitionSelectorExecutor(null);
+        assertEquals("PartitionSelectorExecutor", executor.name());
+    }
+
+    @Test
+    void executor_ShouldBeNotNull() {
+        PartitionSelectorExecutor executor = new PartitionSelectorExecutor(null);
+        assertNotNull(executor);
     }
 }
