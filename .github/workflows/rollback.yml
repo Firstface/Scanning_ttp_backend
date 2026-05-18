@@ -1,4 +1,5 @@
-name: Rollback
+name: rollback
+run-name: rollback #${{ github.run_number }} · ${{ github.event.inputs.image_tag }} · ${{ github.event.inputs.reason }}
 
 on:
   workflow_dispatch:
