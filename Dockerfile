@@ -20,11 +20,16 @@ FROM eclipse-temurin:17-jre-alpine
 
 WORKDIR /app
 
+RUN addgroup -S app && adduser -S -G app app
+
 # Copy built jar from builder
 COPY --from=builder /app/target/*.jar app.jar
+RUN chown app:app /app/app.jar
 
 # Expose port 8080
 EXPOSE 8080
+
+USER app
 
 # Default command
 CMD ["java", "-jar", "app.jar"]

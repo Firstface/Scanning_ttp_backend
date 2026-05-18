@@ -1,9 +1,9 @@
-# Hive Sampling Mock (Capstone Project)
+# scanning_ttp_backend (Capstone Project)
 
-[![CI Pipeline](https://github.com/your-username/Scanning_ttp-1/actions/workflows/ci.yml/badge.svg)](https://github.com/your-username/Scanning_ttp-1/actions/workflows/ci.yml)
+[![CI Pipeline](https://github.com/your-username/scanning_ttp_backend/actions/workflows/ci.yml/badge.svg)](https://github.com/your-username/scanning_ttp_backend/actions/workflows/ci.yml)
 [![GitHub License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Java Version](https://img.shields.io/badge/java-17-blue)](pom.xml)
-[![GitHub Release](https://img.shields.io/github/v/release/your-username/Scanning_ttp-1?sort=semver)](https://github.com/your-username/Scanning_ttp-1/releases)
+[![GitHub Release](https://img.shields.io/github/v/release/your-username/scanning_ttp_backend?sort=semver)](https://github.com/your-username/scanning_ttp_backend/releases)
 
 这是一个面向教学演示的 Hive 表采样系统 Mock 项目，用于展示一个数据校验采样任务如何通过 executor 流水线完成元信息读取、分区选择、采样拆分、SQL 生成、异步执行和结果汇总。
 
@@ -159,7 +159,7 @@ mvn clean test jacoco:report
 ## Project Structure
 
 ```
-Scanning_ttp-1/
+scanning_ttp_backend/
 ├── src/
 │   ├── main/java/.../
 │   │   ├── executor/           # 7 Executors

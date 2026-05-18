@@ -46,14 +46,18 @@ jobs:
 
       - name: Pull Docker image
         run: |
-          TAG=${{ github.event.inputs.image_tag || 'latest' }}
-          docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:$TAG
+          TAG="${IMAGE_TAG:-latest}"
+          docker pull "${REGISTRY}/${IMAGE_NAME}:${TAG}"
+        env:
+          IMAGE_TAG: ${{ github.event.inputs.image_tag || 'latest' }}
 
       - name: Simulate Staging Deployment
         run: |
           echo "=== Deploying to Staging ==="
-          echo "Image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.event.inputs.image_tag || 'latest' }}"
+          echo "Image: ${REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}"
           echo "Status: Deployed successfully!"
+        env:
+          IMAGE_TAG: ${{ github.event.inputs.image_tag || 'latest' }}
 
       - name: Run Smoke Tests
         run: |
@@ -98,10 +102,12 @@ jobs:
       - name: Pull and Deploy
         run: |
           echo "=== Deploying to Production ==="
-          TAG=${{ github.event.inputs.image_tag || 'latest' }}
-          echo "Image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:$TAG"
+          TAG="${IMAGE_TAG:-latest}"
+          echo "Image: ${REGISTRY}/${IMAGE_NAME}:${TAG}"
           echo "Status: Production deployment successful!"
           echo "✅ Production rollout completed"
+        env:
+          IMAGE_TAG: ${{ github.event.inputs.image_tag || 'latest' }}
 
   notify:
     name: Notify Results

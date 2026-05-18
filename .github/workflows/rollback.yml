@@ -32,8 +32,8 @@ jobs:
       - name: Perform Rollback
         run: |
           echo "=== Starting Rollback ==="
-          echo "Rolling back to: ghcr.io/firstface/scanning_ttp_backend:${{ github.event.inputs.image_tag }}"
-          echo "Reason: ${{ github.event.inputs.reason }}"
+          echo "Rolling back to: ghcr.io/firstface/scanning_ttp_backend:${IMAGE_TAG}"
+          echo "Reason: ${ROLLBACK_REASON}"
           echo ""
           echo "Step 1: Pull previous image"
           echo "✅ Image pulled successfully"
@@ -48,10 +48,16 @@ jobs:
           echo "✅ Health check passed"
           echo ""
           echo "=== Rollback Complete ==="
+        env:
+          IMAGE_TAG: ${{ github.event.inputs.image_tag }}
+          ROLLBACK_REASON: ${{ github.event.inputs.reason }}
 
       - name: Rollback Summary
         run: |
           echo "## Rollback Summary" >> $GITHUB_STEP_SUMMARY
-          echo "- **Rollback To**: ${{ github.event.inputs.image_tag }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **Reason**: ${{ github.event.inputs.reason }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Rollback To**: ${IMAGE_TAG}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Reason**: ${ROLLBACK_REASON}" >> $GITHUB_STEP_SUMMARY
           echo "- **Status**: Success ✅" >> $GITHUB_STEP_SUMMARY
+        env:
+          IMAGE_TAG: ${{ github.event.inputs.image_tag }}
+          ROLLBACK_REASON: ${{ github.event.inputs.reason }}

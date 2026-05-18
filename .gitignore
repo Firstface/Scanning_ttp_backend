@@ -72,6 +72,8 @@ bin/
 
 # VS Code
 .vscode/
+.venv/
+.venv-semgrep/
 
 # MacOS
 .DS_Store

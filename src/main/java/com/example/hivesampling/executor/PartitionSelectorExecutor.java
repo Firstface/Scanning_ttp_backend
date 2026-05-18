@@ -7,12 +7,13 @@ import com.example.hivesampling.service.TaskLogService;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import java.security.SecureRandom;
 import java.util.List;
-import java.util.Random;
 
 @Order(2)
 @Component
 public class PartitionSelectorExecutor implements SampleTaskExecutor {
+    private static final SecureRandom SECURE_RANDOM = new SecureRandom();
 
     private final TaskLogService taskLogService;
 
@@ -39,7 +40,7 @@ public class PartitionSelectorExecutor implements SampleTaskExecutor {
 
     private void randomDelay() {
         try {
-            Thread.sleep(500 + new Random().nextInt(1000));
+            Thread.sleep(500L + SECURE_RANDOM.nextInt(1000));
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }

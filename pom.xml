@@ -12,9 +12,9 @@
     </parent>
 
     <groupId>com.example</groupId>
-    <artifactId>hive-sampling-mock</artifactId>
+    <artifactId>scanning_ttp_backend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>hive-sampling-mock</name>
+    <name>scanning_ttp_backend</name>
     <description>Teaching demo for an executor pipeline based Hive table sampling task.</description>
 
     <properties>
