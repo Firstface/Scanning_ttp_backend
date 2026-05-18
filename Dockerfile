@@ -20,6 +20,9 @@ FROM eclipse-temurin:17-jre-alpine
 
 WORKDIR /app
 
+# Pull the latest patched Alpine package for the remaining Trivy finding.
+RUN apk upgrade --no-cache libpng
+
 RUN addgroup -S app && adduser -S -G app app
 
 # Copy built jar from builder
