@@ -14,7 +14,7 @@ Generated from actual local execution on 2026-07-30 and 2026-07-31.
 | Rollback | Implemented locally and verified | `scripts/rollback-compose.sh` | `reports/deployment/rollback-test.txt` | Rolled back from `capstone-6e7a509-20260730194949` to `capstone-6e7a509-20260730194627`; health and frontend smoke checks passed |
 | Semgrep static analysis | Implemented locally and verified | `.github/workflows/*.yml` | `reports/security/semgrep.json`; `reports/security/semgrep-console.txt` | 0 findings; exit code 0 |
 | Gitleaks secret scan | Implemented locally and verified | `.gitleaks.toml` | `reports/security/gitleaks.json`; `reports/security/gitleaks-console.txt` | 0 leaks; exit code 0 |
-| Trivy resolution and rescan | Configured but not executed | `Dockerfile`, CI Trivy steps | `reports/security/trivy-fs-before-console.txt` | Registry TLS verification blocked the vulnerability database; no CVE count claimed |
+| Trivy resolution and rescan | Implemented locally and verified | `pom.xml`, `Dockerfile`, CI Trivy steps | `reports/security/trivy-summary-20260731-151840.md`; `reports/security/trivy-fs-20260731-151424.json`; `reports/security/trivy-image-runtime-verify-20260731-151840.json` | Filesystem and runtime image scans both returned `HIGH=0`, `CRITICAL=0` |
 | Video audio validation | Not implemented | `reports/video/audio-validation.md` | `reports/video/discovered-video-files.txt` | No final video file is present |
 
 ## Commands actually executed
@@ -30,4 +30,4 @@ semgrep scan --config p/default --error --json --output reports/security/semgrep
 gitleaks detect --source . --no-git --config .gitleaks.toml --report-format json --report-path reports/security/gitleaks.json
 ```
 
-No cloud deployment, production URL, GitHub Actions run, completed Trivy scan, or video validation is claimed.
+No cloud deployment, production URL, GitHub Actions run, or video validation is claimed.

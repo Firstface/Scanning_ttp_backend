@@ -17,10 +17,10 @@ Generated from actual local commands on 2026-07-30 and 2026-07-31.
 | Local rollback | `reports/deployment/rollback-test.txt` | Rolled back to immutable tag; health and frontend smoke checks passed |
 | Semgrep | `reports/security/semgrep.json` | 0 findings, exit code 0 |
 | Gitleaks | `reports/security/gitleaks.json` | 0 leaks, exit code 0 |
+| Trivy | `reports/security/trivy-summary-20260731-151840.md`, `reports/security/trivy-fs-20260731-151424.json`, `reports/security/trivy-image-runtime-verify-20260731-151840.json` | Filesystem and runtime image scans both returned 0 HIGH / 0 CRITICAL |
 
 ## Configured but not executed
 
-- Trivy filesystem and image scans: registry TLS verification blocked vulnerability-database retrieval; no vulnerability count is claimed.
 - Video audio validation: no final video file is present.
 
 No cloud deployment, production URL, GitHub Actions run, or artificial security result is claimed.
