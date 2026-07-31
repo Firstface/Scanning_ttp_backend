@@ -1,24 +1,18 @@
 # Tech Stack
 
-## Backend
-- **Language**: Java 17
-- **Framework**: Spring Boot 3.3.5
-- **Build Tool**: Maven
-- **Architecture**: Executor Pipeline Pattern
-- **Storage**: In-Memory (Demo Only)
+## Implemented and verified locally
 
-## DevOps & Testing
-- **Containerization**: Docker, Docker Compose
-- **CI/CD**: GitHub Actions
-- **Registry**: GitHub Container Registry (GHCR)
-- **Unit Tests**: JUnit 5, Mockito
-- **Coverage**: JaCoCo
-- **E2E Tests**: Playwright
-- **Load Tests**: k6
-- **IaC**: Terraform (kreuzwerker/docker provider)
+- Java 17, Spring Boot 3.5.14, Maven
+- Executor pipeline pattern with default in-memory demo store
+- Spring Data JPA entities/repositories and Flyway V1–V4 migrations
+- H2 in MySQL compatibility mode for persistence integration verification
+- JUnit 5, Failsafe and JaCoCo
+- Mock metadata, scheduler and query/result adapters, explicitly labelled as mock adapters
 
-## Security Tools
-- **SAST**: Semgrep
-- **Secret Scan**: Gitleaks
-- **Container Scan**: Trivy
-- **DAST**: OWASP ZAP
+## Configured but not executed on the latest host
+
+- MySQL 8.4 + Docker Compose staging/production-like topology
+- Nginx reverse proxy and React frontend container
+- GitHub Actions Semgrep, Gitleaks, Docker build, Trivy, manual DAST/E2E and k6 stages
+
+The host used for the evidence run did not have Docker, Trivy, Semgrep, Gitleaks or ffprobe installed. No scan, deployment, DAST, k6 or video-validation success is claimed.

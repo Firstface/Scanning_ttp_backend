@@ -2,6 +2,7 @@ package com.example.hivesampling.repository;
 
 import com.example.hivesampling.model.ParentTaskStatus;
 import com.example.hivesampling.model.TaskContext;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
@@ -10,7 +11,8 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Repository
-public class InMemoryTaskRepository {
+@Profile({"default", "dev", "demo"})
+public class InMemoryTaskRepository implements TaskStore {
 
     private final Map<String, TaskContext> tasks = new ConcurrentHashMap<>();
 

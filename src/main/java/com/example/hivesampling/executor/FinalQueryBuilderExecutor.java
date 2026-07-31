@@ -5,7 +5,7 @@ import com.example.hivesampling.model.ShardTask;
 import com.example.hivesampling.model.TaskContext;
 import com.example.hivesampling.pipeline.SampleTaskExecutor;
 import com.example.hivesampling.service.SqlBuilderService;
-import com.example.hivesampling.service.TaskLogService;
+import com.example.hivesampling.service.TaskLogStore;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -19,9 +19,9 @@ public class FinalQueryBuilderExecutor implements SampleTaskExecutor {
     private static final SecureRandom SECURE_RANDOM = new SecureRandom();
 
     private final SqlBuilderService sqlBuilderService;
-    private final TaskLogService taskLogService;
+    private final TaskLogStore taskLogService;
 
-    public FinalQueryBuilderExecutor(SqlBuilderService sqlBuilderService, TaskLogService taskLogService) {
+    public FinalQueryBuilderExecutor(SqlBuilderService sqlBuilderService, TaskLogStore taskLogService) {
         this.sqlBuilderService = sqlBuilderService;
         this.taskLogService = taskLogService;
     }

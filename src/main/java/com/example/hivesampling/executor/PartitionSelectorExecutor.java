@@ -3,7 +3,7 @@ package com.example.hivesampling.executor;
 import com.example.hivesampling.model.ExecutorResult;
 import com.example.hivesampling.model.TaskContext;
 import com.example.hivesampling.pipeline.SampleTaskExecutor;
-import com.example.hivesampling.service.TaskLogService;
+import com.example.hivesampling.service.TaskLogStore;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -15,9 +15,9 @@ import java.util.List;
 public class PartitionSelectorExecutor implements SampleTaskExecutor {
     private static final SecureRandom SECURE_RANDOM = new SecureRandom();
 
-    private final TaskLogService taskLogService;
+    private final TaskLogStore taskLogService;
 
-    public PartitionSelectorExecutor(TaskLogService taskLogService) {
+    public PartitionSelectorExecutor(TaskLogStore taskLogService) {
         this.taskLogService = taskLogService;
     }
 

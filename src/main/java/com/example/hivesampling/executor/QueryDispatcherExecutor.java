@@ -1,12 +1,14 @@
 package com.example.hivesampling.executor;
 
+import com.example.hivesampling.adapter.ExecutionSchedulerAdapter;
 import com.example.hivesampling.model.ExecutorResult;
 import com.example.hivesampling.model.ParentTaskStatus;
 import com.example.hivesampling.model.ShardTask;
 import com.example.hivesampling.model.ShardTaskStatus;
 import com.example.hivesampling.model.TaskContext;
 import com.example.hivesampling.pipeline.SampleTaskExecutor;
-import com.example.hivesampling.service.TaskLogService;
+import com.example.hivesampling.service.TaskLogStore;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -16,11 +18,18 @@ import java.util.Random;
 @Component
 public class QueryDispatcherExecutor implements SampleTaskExecutor {
 
-    private final TaskLogService taskLogService;
+    private final TaskLogStore taskLogService;
+    private final ExecutionSchedulerAdapter executionSchedulerAdapter;
     private final Random random = new Random();
 
-    public QueryDispatcherExecutor(TaskLogService taskLogService) {
+    @Autowired
+    public QueryDispatcherExecutor(TaskLogStore taskLogService, ExecutionSchedulerAdapter executionSchedulerAdapter) {
         this.taskLogService = taskLogService;
+        this.executionSchedulerAdapter = executionSchedulerAdapter;
+    }
+
+    public QueryDispatcherExecutor(TaskLogStore taskLogService) {
+        this(taskLogService, new com.example.hivesampling.adapter.MockExecutionSchedulerAdapter());
     }
 
     @Override
@@ -51,19 +60,10 @@ public class QueryDispatcherExecutor implements SampleTaskExecutor {
         shard.resultCollected = false;
         shard.changeStatus(ShardTaskStatus.RUNNING);
         taskLogService.info(context.taskId, shard.shardId + " RUNNING attempt=" + shard.attemptCount);
-        
         try {
             Thread.sleep(random.nextInt(700, 1600));
-            
-            // Mock produced rows - ensure we reach target
-            long producedRows = mockProducedRows(shard);
-            shard.lastRunRows = producedRows;
-            shard.sampledRows += producedRows;
-            shard.offset += producedRows;
-            // Directly update task context for result collector
-            context.sampledRows += producedRows;
-            shard.changeStatus(ShardTaskStatus.SUCCESS);
-            
+            executionSchedulerAdapter.execute(context, shard);
+            context.sampledRows += shard.lastRunRows;
             taskLogService.info(context.taskId, shard.shardId + " SUCCESS producedRows=" + shard.lastRunRows + " (total so far: " + context.sampledRows + ")");
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
@@ -72,10 +72,6 @@ public class QueryDispatcherExecutor implements SampleTaskExecutor {
         }
     }
 
-    private long mockProducedRows(ShardTask shard) {
-        // Ensure each shard produces at least 900 rows to reach target of 2500
-        return random.nextLong(900, 1100);
-    }
 
     private void randomDelay() {
         try {

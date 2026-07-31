@@ -1,0 +1,202 @@
+
+Running 3 tests using 1 worker
+
+  ✓  1 [chromium] › tests/e2e/api.spec.js:5:3 › Hive Sampling API E2E Tests › Health check should work (32ms)
+  ✓  2 [chromium] › tests/e2e/api.spec.js:12:3 › Hive Sampling API E2E Tests › Create and retrieve sample task (20.1s)
+  ✓  3 [chromium] › tests/e2e/api.spec.js:41:3 › Hive Sampling API E2E Tests › List all tasks should work (64ms)
+
+  3 passed (20.5s)
+{
+  "config": {
+    "argv": [
+      "/Users/bytedance/.local/bin/node/bin/node",
+      "/Users/bytedance/IdeaProjects/scanning_ttp_backend/tests/e2e/node_modules/.bin/playwright",
+      "test",
+      "--config=tests/e2e/playwright.config.js",
+      "--reporter=list,json"
+    ],
+    "configFile": "/Users/bytedance/IdeaProjects/scanning_ttp_backend/tests/e2e/playwright.config.js",
+    "rootDir": "/Users/bytedance/IdeaProjects/scanning_ttp_backend/tests/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/bytedance/IdeaProjects/scanning_ttp_backend/tests/e2e/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/bytedance/IdeaProjects/scanning_ttp_backend/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.62.0",
+    "workers": 5,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "api.spec.js",
+      "file": "api.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Hive Sampling API E2E Tests",
+          "file": "api.spec.js",
+          "line": 3,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Health check should work",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 32,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-30T11:54:22.026Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8747e39b871de0524be5-dd3fa5ff0424985d8522",
+              "file": "api.spec.js",
+              "line": 5,
+              "column": 3
+            },
+            {
+              "title": "Create and retrieve sample task",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 20144,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-30T11:54:22.073Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8747e39b871de0524be5-fc8d7aa6ae121b395211",
+              "file": "api.spec.js",
+              "line": 12,
+              "column": 3
+            },
+            {
+              "title": "List all tasks should work",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 64,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-07-30T11:54:42.222Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8747e39b871de0524be5-52bba3313ef3d53f020b",
+              "file": "api.spec.js",
+              "line": 41,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-07-30T11:54:21.826Z",
+    "duration": 20479.409,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

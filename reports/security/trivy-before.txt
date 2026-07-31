@@ -1,0 +1,9 @@
+Status: Configured but not executed
+
+Attempted command:
+trivy fs --severity HIGH,CRITICAL --format json --output reports/security/trivy-fs-before.json .
+
+Result: The scan could not initialize because the default Trivy vulnerability database mirror timed out. A second attempt using ghcr.io/aquasecurity/trivy-db reached the registry but failed local TLS certificate verification. No vulnerability report was generated, so no CVE, HIGH, or CRITICAL count is claimed.
+
+Raw command output: reports/security/trivy-fs-before-console.txt
+Exit codes: reports/security/scan-exit-codes.txt

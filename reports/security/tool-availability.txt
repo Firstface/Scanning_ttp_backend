@@ -1,0 +1,11 @@
+Local security tool availability check
+2026-07-30T18:49:00+08:00
+Docker engine: 29.6.2 (running, desktop-linux context)
+Docker Compose: v5.3.1
+Trivy: 0.72.0
+Semgrep: 1.172.0
+Gitleaks: 8.30.1
+ffprobe: 8.1.2
+k6: 2.0.0
+
+Constraint: Docker BuildKit and Trivy registry downloads fail TLS certificate verification for external registries. See reports/deployment/staging-deployment.txt and reports/security/trivy-fs-before-console.txt.

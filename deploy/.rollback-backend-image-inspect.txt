@@ -1,0 +1,77 @@
+[
+    {
+        "Id": "sha256:11c63250074b53a7a313e16fbf1f65f8ee19f5664b6db0839cf4d32bfe0ba234",
+        "RepoTags": [
+            "scanning-ttp-backend:capstone-6e7a509-20260730194627"
+        ],
+        "RepoDigests": [
+            "scanning-ttp-backend@sha256:11c63250074b53a7a313e16fbf1f65f8ee19f5664b6db0839cf4d32bfe0ba234"
+        ],
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2026-07-30T11:46:41.674311129Z",
+        "Config": {
+            "User": "app",
+            "ExposedPorts": {
+                "8080/tcp": {}
+            },
+            "Env": [
+                "PATH=/opt/java/openjdk/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "JAVA_HOME=/opt/java/openjdk",
+                "LANG=en_US.UTF-8",
+                "LANGUAGE=en_US:en",
+                "LC_ALL=en_US.UTF-8",
+                "JAVA_VERSION=jdk-17.0.19+10"
+            ],
+            "Entrypoint": [
+                "/__cacert_entrypoint.sh"
+            ],
+            "Cmd": [
+                "java",
+                "-jar",
+                "app.jar"
+            ],
+            "WorkingDir": "/app",
+            "Labels": {
+                "com.docker.compose.project": "deploy",
+                "com.docker.compose.service": "backend",
+                "com.docker.compose.version": "5.3.1",
+                "org.opencontainers.image.version": "22.04"
+            },
+            "ArgsEscaped": true
+        },
+        "Architecture": "arm64",
+        "Os": "linux",
+        "Size": 255884099,
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:349cd24b7d434a8beb71a40f461c42b9f58e19b2637af5065f91bb019759cb91",
+                "sha256:8e41f5d3e1c4f0b2ead61691cb94a3453c10e52a37fadffbe1d5bbb9b604119e",
+                "sha256:8d09a0b2a46cccfd02752899975b14d09dc1e3db85fb0edb36d66aec5be252d6",
+                "sha256:a4d0ed494a013da03cea7c1dfb447b6596d25b2c25663d80afb51b61c13b6565",
+                "sha256:bf96a50200e615b8f57f508ce5ed95f88295dc59c78830e83da9ad2747e44f8c",
+                "sha256:44b60c6979e820d7fb0a2e5d7b10cb1ba573df144912426b68ad37b13bb2b084",
+                "sha256:f79b52e9f947a80fd3611831dd39ad62ebfdb057bee0177993920e4f97ab5b8f",
+                "sha256:3eff921f04f8ea79c78ef03332bda25d3ee1a6c2acf7004b0e3e443d3c563278",
+                "sha256:cd5fae3fc50fe9c67e856dee30a34307fb26b5d598a7bde18e5930aa5ff2f523",
+                "sha256:191394685d5e14e3ea7c1f5bb5025e0785c75e6b458ed66829e0e2ac1b2afdd7"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-07-30T11:46:43.031986879Z"
+        },
+        "Descriptor": {
+            "mediaType": "application/vnd.oci.image.index.v1+json",
+            "digest": "sha256:11c63250074b53a7a313e16fbf1f65f8ee19f5664b6db0839cf4d32bfe0ba234",
+            "size": 856
+        },
+        "Identity": {
+            "Build": [
+                {
+                    "Ref": "volnqfs7owss4qipze5x0q9aw",
+                    "CreatedAt": "2026-07-30T11:46:43.801691588Z"
+                }
+            ]
+        }
+    }
+]

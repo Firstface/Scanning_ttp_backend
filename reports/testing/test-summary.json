@@ -1,0 +1,19 @@
+{
+  "unit_tests": {"total": 41, "passed": 41, "failed": 0, "skipped": 0, "pass_rate": 100.0},
+  "integration_tests": {"total": 5, "passed": 5, "failed": 0, "skipped": 0, "pass_rate": 100.0},
+  "playwright_e2e": {"total": 3, "passed": 3, "failed": 0, "skipped": 0, "pass_rate": 100.0, "duration_seconds": 20.5},
+  "k6": {"virtual_users": 50, "duration_seconds": 60.7, "checks_total": 16503, "checks_passed": 16503, "checks_failed": 0, "http_failure_rate_percent": 0.0, "http_p95_ms": 423.14, "health_p95_ms": 164.9, "create_task_p95_ms": 1310.0, "exit_code": 0},
+  "jacoco": {
+    "line": {"covered": 403, "missed": 473, "coverage_percent": 46.0},
+    "branch": {"covered": 35, "missed": 131, "coverage_percent": 21.08}
+  },
+  "security": {
+    "semgrep": {"findings": 0, "exit_code": 0},
+    "gitleaks": {"findings": 0, "exit_code": 0}
+  },
+  "configured_but_not_executed": [
+    "production-like deployment and rollback",
+    "Trivy filesystem and image scans: registry TLS certificate verification failure",
+    "ffprobe audio validation: no final video files found"
+  ]
+}

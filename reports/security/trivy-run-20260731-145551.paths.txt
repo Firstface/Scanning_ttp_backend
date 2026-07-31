@@ -1,0 +1,10 @@
+timestamp=20260731-145551
+meta=reports/security/trivy-run-20260731-145551.meta.txt
+trivy_fs_json=reports/security/trivy-fs-20260731-145551.json
+trivy_fs_console=reports/security/trivy-fs-20260731-145551.console.txt
+trivy_fs_exit_code=0
+docker_build_console=reports/security/docker-build-20260731-145551.console.txt
+docker_build_exit_code=0
+trivy_image_json=reports/security/trivy-image-20260731-145551.json
+trivy_image_console=reports/security/trivy-image-20260731-145551.console.txt
+trivy_image_exit_code=0

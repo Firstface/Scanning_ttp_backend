@@ -1,0 +1,4 @@
+gitleaks=0
+semgrep=0
+trivy_fs_default_db=1
+trivy_fs_ghcr_db=1

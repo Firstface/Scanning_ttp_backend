@@ -1,0 +1,14 @@
+{
+  "status": "Configured but not executed",
+  "local_execution": {
+    "semgrep": {"status": "Implemented locally and verified", "findings": 0, "exit_code": 0},
+    "gitleaks": {"status": "Implemented locally and verified", "findings": 0, "exit_code": 0},
+    "trivy_filesystem": {"status": "Configured but not executed", "attempted": true, "exit_code": 1, "reason": "vulnerability database unavailable or failed TLS verification"},
+    "trivy_image": {"status": "Configured but not executed", "reason": "application image build blocked by Docker Hub TLS certificate verification"}
+  },
+  "verified_counts": {
+    "semgrep_findings": 0,
+    "gitleaks_findings": 0
+  },
+  "ci_policy": "HIGH and CRITICAL Trivy findings block the CI scan jobs"
+}

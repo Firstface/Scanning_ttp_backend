@@ -1,0 +1,93 @@
+name: deploy
+services:
+  backend:
+    build:
+      context: /Users/bytedance/IdeaProjects/scanning_ttp_backend
+      dockerfile: Dockerfile
+    depends_on:
+      mysql:
+        condition: service_healthy
+        required: true
+    environment:
+      APP_AUTH_ENABLED: "false"
+      APP_RATE_LIMIT_ENABLED: "false"
+      DB_PASSWORD: scanning
+      DB_URL: jdbc:mysql://mysql:3306/scanning_ttp?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      DB_USERNAME: scanning
+      SPRING_PROFILES_ACTIVE: staging
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - wget -qO- http://localhost:8080/actuator/health | grep -q '"status":"UP"'
+      timeout: 5s
+      interval: 10s
+      retries: 12
+      start_period: 30s
+    image: scanning-ttp-backend:capstone-6e7a509-20260730190122
+    networks:
+      scanning-network: null
+  frontend:
+    build:
+      context: /Users/bytedance/IdeaProjects/Scanning_ttp_frontend
+      dockerfile: Dockerfile
+    depends_on:
+      backend:
+        condition: service_healthy
+        required: true
+    image: scanning-ttp-frontend:capstone-6e7a509-20260730190122
+    networks:
+      scanning-network: null
+  mysql:
+    environment:
+      MYSQL_DATABASE: scanning_ttp
+      MYSQL_PASSWORD: scanning
+      MYSQL_ROOT_PASSWORD: local-root-password
+      MYSQL_USER: scanning
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - mysqladmin ping -h localhost -u$$MYSQL_USER -p$$MYSQL_PASSWORD --silent
+      timeout: 5s
+      interval: 10s
+      retries: 12
+      start_period: 20s
+    image: mysql:8.4.4
+    networks:
+      scanning-network: null
+    volumes:
+      - type: volume
+        source: mysql-data
+        target: /var/lib/mysql
+        volume: {}
+  nginx-proxy:
+    build:
+      context: /Users/bytedance/IdeaProjects/scanning_ttp_backend/deploy/nginx-proxy
+      dockerfile: Dockerfile
+    depends_on:
+      backend:
+        condition: service_healthy
+        required: true
+      frontend:
+        condition: service_started
+        required: true
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - wget -qO- http://127.0.0.1/ >/dev/null
+      timeout: 5s
+      interval: 10s
+      retries: 12
+    networks:
+      scanning-network: null
+    ports:
+      - mode: ingress
+        target: 80
+        published: "8088"
+        protocol: tcp
+networks:
+  scanning-network:
+    name: deploy_scanning-network
+    driver: bridge
+volumes:
+  mysql-data:
+    name: deploy_mysql-data

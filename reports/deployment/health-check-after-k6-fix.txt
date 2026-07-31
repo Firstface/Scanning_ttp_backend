@@ -1,0 +1,25 @@
+2026-07-30T11:42:33Z
+
+GET /actuator/health
+HTTP/1.1 200 
+Server: nginx/1.31.3
+Date: Thu, 30 Jul 2026 11:42:33 GMT
+Content-Type: application/vnd.spring-boot.actuator.v3+json
+Transfer-Encoding: chunked
+Connection: keep-alive
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+
+{"status":"UP"}
+GET /
+HTTP/1.1 200 OK
+Server: nginx/1.31.3
+Date: Thu, 30 Jul 2026 11:42:33 GMT
+Content-Type: text/html
+Content-Length: 373
+Connection: keep-alive
+Last-Modified: Thu, 14 May 2026 09:05:38 GMT
+ETag: "6a059062-175"
+Accept-Ranges: bytes
+

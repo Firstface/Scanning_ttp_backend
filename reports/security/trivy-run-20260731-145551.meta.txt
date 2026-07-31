@@ -1,0 +1,7 @@
+started_at=2026-07-31T14:55:51+08:00
+repo=/Users/bytedance/IdeaProjects/scanning_ttp_backend
+trivy_version=Version: 0.72.0 
+docker_version=Docker version 29.6.2, build dfc4efb
+db_repository=ghcr.io/aquasecurity/trivy-db:2
+java_db_repository=ghcr.io/aquasecurity/trivy-java-db:1
+timeout=15m

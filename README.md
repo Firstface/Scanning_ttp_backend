@@ -1,250 +1,55 @@
-# scanning_ttp_backend (Capstone Project)
+# Scanning TTP Backend
 
-[![CI Pipeline](https://github.com/your-username/scanning_ttp_backend/actions/workflows/ci.yml/badge.svg)](https://github.com/your-username/scanning_ttp_backend/actions/workflows/ci.yml)
-[![GitHub License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Java Version](https://img.shields.io/badge/java-17-blue)](pom.xml)
-[![GitHub Release](https://img.shields.io/github/v/release/your-username/scanning_ttp_backend?sort=semver)](https://github.com/your-username/scanning_ttp_backend/releases)
+Spring Boot backend for a table-sampling task pipeline. The existing demo workflow remains available through the default/dev profiles; a profile-selected JPA/Flyway persistence path is available for staging and production-like local Compose deployments.
 
-这是一个面向教学演示的 Hive 表采样系统 Mock 项目，用于展示一个数据校验采样任务如何通过 executor 流水线完成元信息读取、分区选择、采样拆分、SQL 生成、异步执行和结果汇总。
+## Verified local result
 
-**注：此项目仅在后端仓库实现完整功能。前端仅用于演示界面展示。**
+`mvn clean verify` completed successfully on 2026-07-30:
 
----
+- Surefire unit tests: **40 / 40 passed**
+- Failsafe integration tests: **5 / 5 passed**
+- JaCoCo line coverage: **46.40%**
+- JaCoCo branch coverage: **22.15%**
+- H2 in MySQL compatibility mode applied Flyway migrations V1–V4 and verified the required physical relationships.
 
-## Quick Start (Docker Compose)
+See `reports/testing/final-test-summary.md` and `reports/database/` for generated evidence.
 
-### HTTPS Mode (Recommended for Demo)
+## Storage profiles
+
+| Profile | Store | Status |
+|---|---|---|
+| default / `dev` / `demo` | Existing `InMemoryTaskRepository` and in-memory task logs | Implemented and verified by existing tests |
+| `persistence` | Spring Data JPA + Flyway; H2 is used by the persistence integration test | Implemented locally and verified |
+| `staging` / `production-like` | Spring Data JPA + Flyway configured for MySQL 8 | Configured but not executed on this host |
+
+The persistent model includes `app_user`, `app_role`, `user_role`, `validation_task`, `task_run`, `sampling`, `shard_task`, `task_log`, and `audit_event`. Required 1:N relationships are documented and verified in `reports/database/relationship-verification.txt`.
+
+## Local development
+
 ```bash
-# First, generate self-signed certificates
-make certs
-
-# Option 1: Use Make (recommended)
-make up
-
-# Option 2: Direct Docker Compose
-cd deploy
-docker-compose up -d --build
-
-# Wait for services to be ready (~30 sec)
-
-# Access the system:
-# HTTPS Frontend: https://localhost
-# Backend: http://localhost:8080
-# Health Check: http://localhost:8080/actuator/health
-```
-
-### Notes on HTTPS Certificates
-- `make certs` requires [mkcert](https://github.com/FiloSottile/mkcert) to be installed
-- Certificates are stored in `deploy/nginx-proxy/certs/`
-- Browsers will show a padlock icon for HTTPS
-
----
-
-## Authentication
-
-### Demo Credentials
-| Username | Password |
-|----------|----------|
-| `admin` | `admin123` |
-
-### Login to Get JWT Token
-```bash
-curl -X POST 'http://localhost:8080/auth/login' \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "username": "admin",
-    "password": "admin123"
-  }'
-```
-
-### Use JWT Token for API Requests
-```bash
-curl -X POST 'http://localhost:8080/api/sample-tasks' \
-  -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer YOUR_TOKEN_HERE' \
-  -d '{...}'
-```
-
-### Disable Authentication (Dev Mode)
-Set `app.auth.enabled=false` in `application.yml` or use `SPRING_PROFILES_ACTIVE=dev`
-
----
-
-## What's Included (Capstone Deliverables)
-
-### Backend-Focused DevOps Features
-- ✅ **Containerization**: Docker + Docker Compose + HTTPS Proxy
-- ✅ **CI/CD Pipeline**: GitHub Actions (ci.yml, cd.yml, rollback.yml)
-- ✅ **Unit Tests**: JUnit + JaCoCo coverage
-- ✅ **Integration Tests**: TestRestTemplate full-flow tests
-- ✅ **E2E Tests**: Playwright API tests
-- ✅ **Load Tests**: k6 performance tests
-- ✅ **Security Scans**: Semgrep, Gitleaks, Trivy, OWASP ZAP
-- ✅ **JWT Authentication**: HS256 tokens with 1h expiration
-- ✅ **Rate Limiting**: Bucket4j (60 req/min per IP)
-- ✅ **IaC**: Terraform (kreuzwerker/docker provider)
-- ✅ **Demo Scripts**: Presentation-ready 4.5 min scripts
-
----
-
-## Executor Pipeline (7 Stages)
-
-The fixed-order pipeline includes:
-
-1. `RetrieveMetaInfosExecutor` - Load table metadata
-2. `PartitionSelectorExecutor` - Select partitions
-3. `SamplingExecutor` - Split into shards
-4. `FinalQueryBuilderExecutor` - Build final SQL
-5. `QueryDispatcherExecutor` - Execute shards
-6. `ResultCollectorExecutor` - Collect results
-7. `FinalizeTaskExecutor` - Final task status
-
----
-
-## API Documentation
-
-### Create and Start a Task
-```bash
-curl -X POST 'http://localhost:8080/api/sample-tasks' \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "databaseName": "demo_db",
-    "tableName": "demo_event_table",
-    "targetSampleRows": 2500,
-    "selectedPartitions": ["2026-05-01", "2026-05-02", "2026-05-03"]
-  }'
-```
-
-### Get Task Status
-```bash
-curl 'http://localhost:8080/api/sample-tasks/{taskId}'
-```
-
-### Get Pipeline Status
-```bash
-curl 'http://localhost:8080/api/sample-tasks/{taskId}/pipeline'
-```
-
-### Get Shard Status
-```bash
-curl 'http://localhost:8080/api/sample-tasks/{taskId}/shards'
-```
-
-### Get Task Logs
-```bash
-curl 'http://localhost:8080/api/sample-tasks/{taskId}/logs'
-```
-
----
-
-## Local Development (Without Docker)
-
-### Prerequisites
-- Java 17
-- Maven 3.8+
-
-### Run
-```bash
+mvn clean verify
 mvn spring-boot:run
 ```
 
-### Run Tests
-```bash
-mvn clean test jacoco:report
-# Coverage report at: target/site/jacoco/index.html
-```
+For the in-memory demo, the default profile is sufficient. For a MySQL-backed process, use a Docker-capable host and the `staging` or `production-like` profile.
 
----
+## Local production-like Compose topology
 
-## Project Structure
-
-```
-scanning_ttp_backend/
-├── src/
-│   ├── main/java/.../
-│   │   ├── executor/           # 7 Executors
-│   │   ├── pipeline/           # Pipeline runner & interface
-│   │   ├── controller/         # REST API
-│   │   ├── service/            # Business logic
-│   │   ├── repository/         # In-memory storage
-│   │   ├── model/              # Domain models
-│   │   └── config/             # App config
-│   └── test/java/              # Unit tests
-├── deploy/
-│   └── docker-compose.yml
-├── .github/workflows/
-│   ├── ci.yml                  # Push/PR Pipeline
-│   ├── cd.yml                  # Tag/Deploy Pipeline
-│   └── rollback.yml            # Rollback Pipeline
-├── infra/terraform/            # Infrastructure as Code
-├── docs/
-│   └── demo/                   # Presentation scripts
-└── scripts/                    # Utility scripts
-```
-
----
-
-## Makefile Commands
-
-| Command | Purpose |
-|---------|---------|
-| `make up` | Start all services with Docker Compose |
-| `make down` | Stop all services |
-| `make logs` | Tail service logs |
-| `make test` | Run unit tests + coverage |
-| `make it` | Run integration tests only |
-| `make reset` | Full reset (clean + restart) |
-| `make build` | Build all images |
-| `make certs` | Generate HTTPS certificates (requires mkcert) |
-
----
-
-## Demo Reset Script
+`deploy/docker-compose.yml` defines MySQL 8.4, backend, frontend and Nginx. It uses Flyway on backend startup and supports immutable image tags:
 
 ```bash
-./scripts/demo-reset.sh
+IMAGE_TAG=<immutable-tag> SPRING_PROFILE=staging docker compose -f deploy/docker-compose.yml up -d --build --wait
+sh scripts/rollback-compose.sh <immutable-tag> production-like
 ```
 
-Cleans up and restarts a fresh demo environment.
+**Configured but not executed:** Docker is unavailable on the host used for the latest evidence run. No cloud or production deployment is claimed. Deployment limitations are recorded under `reports/deployment/`.
 
----
+## Security and extended validation
 
-## GitHub Setup for CI/CD
+GitHub Actions configuration includes Maven verification, JaCoCo artifacts, Semgrep, Gitleaks, Docker build, Trivy filesystem/image scans that block HIGH/CRITICAL findings, and manually-triggered extended Playwright/k6 validation. Local scan results are not claimed because Trivy, Semgrep, Gitleaks and Docker were unavailable; see `reports/security/`.
 
-### Requirements:
-1. **Enable GitHub Actions** in repo Settings
-2. **Create Environments** in repo → Settings → Environments:
-   - `staging`
-   - `production` (enable "Required reviewers" for manual gate)
-3. **No secrets needed** - Uses GITHUB_TOKEN for GHCR
+## Architecture
 
----
-
-## Capstone Documentation (For PPT)
-
-See [DELIVERABLES.md](DELIVERABLES.md) for full list of deliverables and PPT chapter mapping.
-
-| Document | Location |
-|----------|----------|
-| Tech Stack | [docs/tech-stack.md](docs/tech-stack.md) |
-| Deployment Diagram | [docs/deployment.mmd](docs/deployment.mmd) |
-| CI/CD Diagram | [docs/cicd-diagram.md](docs/cicd-diagram.md) |
-| Security Docs | [SECURITY.md](SECURITY.md) |
-| App Demo Script | [docs/demo/app-demo-script.md](docs/demo/app-demo-script.md) |
-| CI/CD Demo Script | [docs/demo/cicd-demo-script.md](docs/demo/cicd-demo-script.md) |
-| Screenshot Checklist | [docs/demo/screenshots-checklist.md](docs/demo/screenshots-checklist.md) |
-
----
-
-## Project Overview (Original Design)
-
-核心链路分为两个阶段：
-
-1. **同步 Pipeline 阶段**：创建 `TaskContext` 后，`PipelineRunner` 按固定顺序执行多个 executor。
-2. **结果汇总与完成判定**：`ResultCollectorExecutor` 汇总 shard 结果，`FinalizeTaskExecutor` 最终判定任务成功或失败。
-
----
-
-## License
-
-MIT
+- Diagram source: `docs/physical-architecture.mmd`
+- Renderable SVG: `docs/physical-architecture.svg`
+- Deployment guide: `docs/deployment.md`

@@ -1,0 +1,20 @@
+Docker Compose staging attempts
+2026-07-30T18:47:00+08:00 and 2026-07-30T18:53:14+08:00
+
+Docker engine: 29.6.2 (desktop-linux)
+Docker Compose: v5.3.1
+
+Attempt 1:
+- Tag: capstone-6e7a509
+- MySQL 8.4.4 pulled successfully.
+- Application build failed because Docker BuildKit could not verify the TLS certificate for auth.docker.io.
+
+ARM64 remediation:
+- Replaced the ARM64-incompatible `maven:3.9-eclipse-temurin-17-alpine` builder with `maven:3.9-eclipse-temurin-17`.
+- Replaced the Alpine runtime with `eclipse-temurin:17-jre-jammy` and converted runtime package/user commands to Debian equivalents.
+
+Attempt 2:
+- Tag: capstone-6e7a509-20260730185314
+- Build reached resolution of the revised backend image tags but again failed Docker Hub TLS certificate verification before image construction.
+
+No Compose service was created. Full output: reports/deployment/staging-deployment.txt

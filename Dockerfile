@@ -1,5 +1,5 @@
 # Builder stage
-FROM maven:3.9-eclipse-temurin-17-alpine AS builder
+FROM maven:3.9-eclipse-temurin-17 AS builder
 
 WORKDIR /app
 
@@ -16,14 +16,14 @@ COPY src ./src
 RUN mvn clean package -DskipTests -B
 
 # Production stage
-FROM eclipse-temurin:17-jre-alpine
+FROM eclipse-temurin:17-jre-jammy
 
 WORKDIR /app
 
-# Pull the latest patched Alpine package for the remaining Trivy finding.
-RUN apk upgrade --no-cache libpng
+# Install the health-check client in the multi-architecture Debian runtime.
+RUN apt-get update && apt-get install -y --no-install-recommends wget && apt-get clean
 
-RUN addgroup -S app && adduser -S -G app app
+RUN groupadd --system app && useradd --system --gid app --create-home app
 
 # Copy built jar from builder
 COPY --from=builder /app/target/*.jar app.jar

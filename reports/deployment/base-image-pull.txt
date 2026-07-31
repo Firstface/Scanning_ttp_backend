@@ -1,0 +1,66 @@
+Node and Nginx base-image pre-pull
+20-slim: Pulling from library/node
+ed7f19ee07f9: Pulling fs layer
+791fd1b17847: Pulling fs layer
+46ac7a0b9811: Pulling fs layer
+b007268d7e62: Pulling fs layer
+93f1e44b7642: Pulling fs layer
+9615975875fe: Download complete
+4cd65ac39cfe: Download complete
+ed7f19ee07f9: Download complete
+93f1e44b7642: Download complete
+791fd1b17847: Download complete
+b007268d7e62: Download complete
+46ac7a0b9811: Download complete
+93f1e44b7642: Pull complete
+46ac7a0b9811: Pull complete
+ed7f19ee07f9: Pull complete
+791fd1b17847: Pull complete
+b007268d7e62: Pull complete
+Digest: sha256:2cf067cfed83d5ea958367df9f966191a942351a2df77d6f0193e162b5febfc0
+Status: Downloaded newer image for node:20-slim
+docker.io/library/node:20-slim
+alpine: Pulling from library/nginx
+c4a042f5cf71: Pulling fs layer
+e1f13a453c9d: Pulling fs layer
+7b1fb50ff9dc: Pulling fs layer
+977aedb192ad: Pulling fs layer
+5de55e5ef9c0: Pulling fs layer
+d0e9565ba4ff: Pulling fs layer
+ba4be3b26f08: Pulling fs layer
+e42993d4c6ec: Pulling fs layer
+e1f13a453c9d: Download complete
+c4a042f5cf71: Download complete
+ba4be3b26f08: Download complete
+e42993d4c6ec: Download complete
+7b1fb50ff9dc: Download complete
+d0e9565ba4ff: Download complete
+5de55e5ef9c0: Download complete
+977aedb192ad: Download complete
+5de55e5ef9c0: Pull complete
+e1f13a453c9d: Pull complete
+c4a042f5cf71: Pull complete
+ba4be3b26f08: Pull complete
+e42993d4c6ec: Pull complete
+7b1fb50ff9dc: Pull complete
+d0e9565ba4ff: Pull complete
+977aedb192ad: Pull complete
+a23c9a8f544d: Download complete
+374d3b01b8ca: Download complete
+Digest: sha256:4a73073bd557c65b759505da037898b61f1be6cbcc3c2c3aeac22d2a470c1752
+Status: Downloaded newer image for nginx:alpine
+docker.io/library/nginx:alpine
+node_exit_code=0
+nginx_exit_code=0
+
+Backend base-image pre-pull
+3.9-eclipse-temurin-17: Pulling from library/maven
+Digest: sha256:1ed5d1f54416b706707b4f3238f63a20bb06aab27c6d240090a2bb9ad895ed45
+Status: Image is up to date for maven:3.9-eclipse-temurin-17
+docker.io/library/maven:3.9-eclipse-temurin-17
+17-jre-jammy: Pulling from library/eclipse-temurin
+Digest: sha256:475d8e96b4b2bfe08999e5e854755c773af1581acdf959a4545d88f0696a2339
+Status: Image is up to date for eclipse-temurin:17-jre-jammy
+docker.io/library/eclipse-temurin:17-jre-jammy
+maven_exit_code=0
+temurin_exit_code=0

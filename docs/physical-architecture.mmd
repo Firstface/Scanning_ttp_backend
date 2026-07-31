@@ -1,0 +1,20 @@
+flowchart LR
+  Operator[Operator Browser] --> Nginx[Nginx reverse proxy]
+  Nginx --> Frontend[React frontend container]
+  Nginx --> Backend[Spring Boot backend container]
+  Backend --> MySQL[(MySQL 8 container\nFlyway migrations)]
+  Backend --> Cache[In-process cache/store\nprofile-selected TaskStore]
+  Backend --> Meta[Mock Metadata Service Adapter]
+  Backend --> Scheduler[Mock Execution Scheduler Adapter]
+  Backend --> Results[Mock Query/Result Service Adapter]
+  subgraph DockerNetwork[Docker bridge network]
+    Nginx
+    Frontend
+    Backend
+    MySQL
+    Cache
+  end
+  GitHub[GitHub Actions] --> Registry[Container Registry]
+  Registry --> Staging[Local staging Compose environment]
+  Registry --> ProdLike[Local production-like Compose environment]
+  ProdLike --> Rollback[Rollback script: immutable tag + health check]

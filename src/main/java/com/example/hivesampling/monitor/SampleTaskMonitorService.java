@@ -4,10 +4,10 @@ import com.example.hivesampling.model.ParentTaskStatus;
 import com.example.hivesampling.model.ShardTask;
 import com.example.hivesampling.model.ShardTaskStatus;
 import com.example.hivesampling.model.TaskContext;
-import com.example.hivesampling.repository.InMemoryTaskRepository;
+import com.example.hivesampling.repository.TaskStore;
 import com.example.hivesampling.service.ShardExecutionService;
 import com.example.hivesampling.service.SqlBuilderService;
-import com.example.hivesampling.service.TaskLogService;
+import com.example.hivesampling.service.TaskLogStore;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -16,17 +16,17 @@ import org.springframework.stereotype.Service;
 public class SampleTaskMonitorService {
 
     private final int maxAttemptsPerShard;
-    private final InMemoryTaskRepository taskRepository;
+    private final TaskStore taskRepository;
     private final ShardExecutionService shardExecutionService;
     private final SqlBuilderService sqlBuilderService;
-    private final TaskLogService taskLogService;
+    private final TaskLogStore taskLogService;
 
     public SampleTaskMonitorService(
             @Value("${sampling.max-attempts-per-shard:3}") int maxAttemptsPerShard,
-            InMemoryTaskRepository taskRepository,
+            TaskStore taskRepository,
             ShardExecutionService shardExecutionService,
             SqlBuilderService sqlBuilderService,
-            TaskLogService taskLogService) {
+            TaskLogStore taskLogService) {
         this.maxAttemptsPerShard = maxAttemptsPerShard;
         this.taskRepository = taskRepository;
         this.shardExecutionService = shardExecutionService;
@@ -36,10 +36,13 @@ public class SampleTaskMonitorService {
 
     @Scheduled(fixedDelay = 1000)
     public void collectResults() {
-        taskRepository.findActiveTasks().forEach(this::collectTask);
+        taskRepository.findActiveTasks().stream()
+                .filter(context -> context.status != ParentTaskStatus.PIPELINE_RUNNING)
+                .forEach(this::collectTask);
     }
 
     private void collectTask(TaskContext context) {
+        try {
         for (ShardTask shard : context.shards) {
             if (shard.status == ShardTaskStatus.SUCCESS && !shard.resultCollected) {
                 shard.resultCollected = true;
@@ -81,6 +84,9 @@ public class SampleTaskMonitorService {
         context.changeStatus(ParentTaskStatus.FAILED);
         taskLogService.info(context.taskId, "Parent task finalized status=FAILED sampledRows="
                 + context.sampledRows + ", targetSampleRows=" + context.targetSampleRows);
+        } finally {
+            taskRepository.save(context);
+        }
     }
 
     private void cancelNotStartedShards(TaskContext context) {

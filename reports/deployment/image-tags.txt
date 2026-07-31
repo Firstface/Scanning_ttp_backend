@@ -1,0 +1,2 @@
+backend_image=scanning-ttp-backend:capstone-6e7a509-20260730194949
+frontend_image=scanning-ttp-frontend:capstone-6e7a509-20260730194949

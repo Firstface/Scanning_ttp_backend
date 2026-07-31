@@ -5,7 +5,7 @@ import com.example.hivesampling.model.ShardTask;
 import com.example.hivesampling.model.TaskContext;
 import com.example.hivesampling.pipeline.SampleTaskExecutor;
 import com.example.hivesampling.service.SqlBuilderService;
-import com.example.hivesampling.service.TaskLogService;
+import com.example.hivesampling.service.TaskLogStore;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -22,13 +22,13 @@ public class SamplingExecutor implements SampleTaskExecutor {
     private final int shardSize;
     private final int plannedRowsPerRun;
     private final SqlBuilderService sqlBuilderService;
-    private final TaskLogService taskLogService;
+    private final TaskLogStore taskLogService;
 
     public SamplingExecutor(
             @Value("${sampling.shard-size:5}") int shardSize,
             @Value("${sampling.planned-rows-per-run:1000}") int plannedRowsPerRun,
             SqlBuilderService sqlBuilderService,
-            TaskLogService taskLogService) {
+            TaskLogStore taskLogService) {
         this.shardSize = shardSize;
         this.plannedRowsPerRun = plannedRowsPerRun;
         this.sqlBuilderService = sqlBuilderService;
@@ -39,12 +39,12 @@ public class SamplingExecutor implements SampleTaskExecutor {
     public ExecutorResult execute(TaskContext context) {
         randomDelay();
         List<ShardTask> shards = new ArrayList<>();
-        int numShards = 3; // Create 3 shards for demonstration
+        int numShards = Math.min(3, context.selectedPartitions.size());
         
         for (int i = 1; i <= numShards; i++) {
             ShardTask shard = new ShardTask();
             shard.shardId = context.taskId + "-shard-" + i;
-            // Assign 1 partition per shard
+            // Assign one selected partition to each shard.
             int startIdx = (i - 1) * 1;
             int endIdx = Math.min(startIdx + 1, context.selectedPartitions.size());
             shard.partitionGroup = new ArrayList<>(context.selectedPartitions.subList(startIdx, endIdx));

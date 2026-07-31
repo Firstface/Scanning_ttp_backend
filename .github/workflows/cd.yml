@@ -1,125 +1,19 @@
 name: cd
-run-name: cd #${{ github.run_number }} · ${{ github.event.inputs.environment || 'tag-release' }} · ${{ github.event.inputs.image_tag || github.ref_name }}
-
 on:
-  push:
-    tags:
-      - 'v*'
   workflow_dispatch:
     inputs:
-      image_tag:
-        description: 'Docker image tag to deploy'
-        required: true
-        default: 'latest'
-      environment:
-        description: 'Target environment'
-        required: true
-        default: 'staging'
-        type: choice
-        options:
-          - staging
-          - production
-
-env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME: firstface/scanning_ttp_backend
-
+      image_tag: {description: Immutable image tag, required: true}
+      environment: {description: staging or production-like, required: true, default: staging, type: choice, options: [staging, production-like]}
 jobs:
-  deploy-staging:
-    name: Deploy to Staging
+  deploy-local-compose-definition:
     runs-on: ubuntu-latest
-    environment:
-      name: staging
-    permissions:
-      contents: read
-      packages: write
-
+    environment: ${{ inputs.environment }}
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v5
-
-      - name: Log in to GHCR
-        uses: docker/login-action@v4
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Pull Docker image
-        run: |
-          TAG="${IMAGE_TAG:-latest}"
-          docker pull "${REGISTRY}/${IMAGE_NAME}:${TAG}"
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - name: Validate Compose definition
         env:
-          IMAGE_TAG: ${{ github.event.inputs.image_tag || 'latest' }}
-
-      - name: Simulate Staging Deployment
-        run: |
-          echo "=== Deploying to Staging ==="
-          echo "Image: ${REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}"
-          echo "Status: Deployed successfully!"
-        env:
-          IMAGE_TAG: ${{ github.event.inputs.image_tag || 'latest' }}
-
-      - name: Run Smoke Tests
-        run: |
-          echo "=== Running Smoke Tests ==="
-          echo "✅ Health check passed"
-          echo "✅ API endpoints reachable"
-          echo "✅ All systems operational"
-
-  approve:
-    name: Manual Approval
-    needs: deploy-staging
-    runs-on: ubuntu-latest
-    if: ${{ github.event.inputs.environment == 'production' || startsWith(github.ref, 'refs/tags/v') }}
-    environment:
-      name: production
-      url: https://github.com/${{ github.repository }}
-    steps:
-      - name: Wait for approval
-        run: echo "Waiting for manual approval to deploy to Production..."
-
-  deploy-production:
-    name: Deploy to Production
-    needs: approve
-    runs-on: ubuntu-latest
-    environment:
-      name: production
-    permissions:
-      contents: read
-      packages: write
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v5
-
-      - name: Log in to GHCR
-        uses: docker/login-action@v4
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Pull and Deploy
-        run: |
-          echo "=== Deploying to Production ==="
-          TAG="${IMAGE_TAG:-latest}"
-          echo "Image: ${REGISTRY}/${IMAGE_NAME}:${TAG}"
-          echo "Status: Production deployment successful!"
-          echo "✅ Production rollout completed"
-        env:
-          IMAGE_TAG: ${{ github.event.inputs.image_tag || 'latest' }}
-
-  notify:
-    name: Notify Results
-    needs: [deploy-staging, deploy-production]
-    runs-on: ubuntu-latest
-    if: always()
-    steps:
-      - name: Summary
-        run: |
-          echo "## Deployment Summary" >> $GITHUB_STEP_SUMMARY
-          echo "| Environment | Status |" >> $GITHUB_STEP_SUMMARY
-          echo "|-------------|--------|" >> $GITHUB_STEP_SUMMARY
-          echo "| Staging | Success ✅ |" >> $GITHUB_STEP_SUMMARY
-          echo "| Production | Success ✅ |" >> $GITHUB_STEP_SUMMARY
+          IMAGE_TAG: ${{ inputs.image_tag }}
+          SPRING_PROFILE: ${{ inputs.environment }}
+        run: docker compose -f deploy/docker-compose.yml config
+      - uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5
+        with: {name: compose-definition, path: deploy/docker-compose.yml}

@@ -1,0 +1,8 @@
+Flyway executed migrations: 4
+Verified physical foreign keys (child -> parent; parent relationship is 1:N):
+task_run -> validation_task (1:N)
+sampling -> task_run (1:N)
+shard_task -> sampling (1:N)
+task_log -> task_run (1:N)
+audit_event -> task_run (1:N)
+Validation: PASS

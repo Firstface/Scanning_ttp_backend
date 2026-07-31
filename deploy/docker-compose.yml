@@ -1,46 +1,70 @@
-version: '3.8'
-
 services:
+  mysql:
+    image: mysql:8.4.4
+    environment:
+      MYSQL_DATABASE: scanning_ttp
+      MYSQL_USER: scanning
+      MYSQL_PASSWORD: ${DB_PASSWORD:-scanning}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-local-root-password}
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks: [scanning-network]
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u$$MYSQL_USER -p$$MYSQL_PASSWORD --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 20s
   backend:
+    image: ${BACKEND_IMAGE:-scanning-ttp-backend}:${IMAGE_TAG:-local}
     build:
       context: ..
       dockerfile: Dockerfile
-    ports:
-      - "8080:8080"
     environment:
-      - SPRING_PROFILES_ACTIVE=docker
-    networks:
-      - scanning-network
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILE:-staging}
+      DB_URL: jdbc:mysql://mysql:3306/scanning_ttp?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      DB_USERNAME: scanning
+      DB_PASSWORD: ${DB_PASSWORD:-scanning}
+      APP_AUTH_ENABLED: "false"
+      APP_RATE_LIMIT_ENABLED: "false"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks: [scanning-network]
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8080/actuator/health | grep -q '\"status\":\"UP\"'"]
       interval: 10s
       timeout: 5s
-      retries: 5
-    restart: unless-stopped
-
+      retries: 12
+      start_period: 30s
   frontend:
+    image: ${FRONTEND_IMAGE:-scanning-ttp-frontend}:${IMAGE_TAG:-local}
     build:
-      context: ../../Scanning_ttp_frontend
+      context: ${FRONTEND_CONTEXT:-../../Scanning_ttp_frontend}
       dockerfile: Dockerfile
     depends_on:
-      - backend
-    networks:
-      - scanning-network
-    restart: unless-stopped
-
+      backend:
+        condition: service_healthy
+    networks: [scanning-network]
   nginx-proxy:
     build:
       context: ./nginx-proxy
       dockerfile: Dockerfile
     ports:
-      - "443:443"
+      - "${HTTP_PORT:-8088}:80"
     depends_on:
-      - frontend
-      - backend
-    networks:
-      - scanning-network
-    restart: unless-stopped
-
+      frontend:
+        condition: service_started
+      backend:
+        condition: service_healthy
+    networks: [scanning-network]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1/ >/dev/null"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
 networks:
   scanning-network:
     driver: bridge
+volumes:
+  mysql-data:

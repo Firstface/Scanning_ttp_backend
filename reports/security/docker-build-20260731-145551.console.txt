@@ -1,0 +1,67 @@
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 823B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/maven:3.9-eclipse-temurin-17
+#2 DONE 0.1s
+
+#3 [internal] load metadata for docker.io/library/eclipse-temurin:17-jre-jammy
+#3 DONE 0.1s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 2B done
+#4 DONE 0.0s
+
+#5 [stage-1 1/6] FROM docker.io/library/eclipse-temurin:17-jre-jammy@sha256:475d8e96b4b2bfe08999e5e854755c773af1581acdf959a4545d88f0696a2339
+#5 resolve docker.io/library/eclipse-temurin:17-jre-jammy@sha256:475d8e96b4b2bfe08999e5e854755c773af1581acdf959a4545d88f0696a2339 0.0s done
+#5 DONE 0.0s
+
+#6 [builder 1/6] FROM docker.io/library/maven:3.9-eclipse-temurin-17@sha256:1ed5d1f54416b706707b4f3238f63a20bb06aab27c6d240090a2bb9ad895ed45
+#6 resolve docker.io/library/maven:3.9-eclipse-temurin-17@sha256:1ed5d1f54416b706707b4f3238f63a20bb06aab27c6d240090a2bb9ad895ed45 0.0s done
+#6 DONE 0.0s
+
+#7 [internal] load build context
+#7 transferring context: 15.29kB 0.0s done
+#7 DONE 0.0s
+
+#8 [stage-1 4/6] RUN groupadd --system app && useradd --system --gid app --create-home app
+#8 CACHED
+
+#9 [builder 5/6] COPY src ./src
+#9 CACHED
+
+#10 [builder 2/6] WORKDIR /app
+#10 CACHED
+
+#11 [stage-1 2/6] WORKDIR /app
+#11 CACHED
+
+#12 [builder 6/6] RUN mvn clean package -DskipTests -B
+#12 CACHED
+
+#13 [builder 3/6] COPY pom.xml .
+#13 CACHED
+
+#14 [stage-1 5/6] COPY --from=builder /app/target/*.jar app.jar
+#14 CACHED
+
+#15 [stage-1 3/6] RUN apt-get update && apt-get install -y --no-install-recommends wget && apt-get clean
+#15 CACHED
+
+#16 [builder 4/6] RUN mvn dependency:go-offline -B
+#16 CACHED
+
+#17 [stage-1 6/6] RUN chown app:app /app/app.jar
+#17 CACHED
+
+#18 exporting to image
+#18 exporting layers done
+#18 exporting manifest sha256:65544b7dd2dde32a1463b1b6e60a081284924bef69a6d92c9756b81fe9ea435b done
+#18 exporting config sha256:501d5247580b2ccb2e73f61aafcd1a3741338467ca359467435dfc8736a82ec1 done
+#18 exporting attestation manifest sha256:3a321d9ed18a321e7ce2669372390859db21d4f2e491053292aaa6f46d424cd9 done
+#18 exporting manifest list sha256:7f3c9f5951e9e4872124c02e8c793b58885fda42500e97bb9aeaa5edf470307b done
+#18 naming to docker.io/library/scanning-ttp-backend:trivy-20260731-145551 done
+#18 unpacking to docker.io/library/scanning-ttp-backend:trivy-20260731-145551 done
+#18 DONE 0.1s

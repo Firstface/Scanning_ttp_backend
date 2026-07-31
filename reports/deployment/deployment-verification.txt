@@ -1,0 +1,27 @@
+Status: Implemented locally and verified
+Environment: local macOS Docker Compose production-like environment
+Date: 2026-07-31
+
+Implemented deployment definition:
+- `deploy/docker-compose.yml` defines MySQL 8.4, Spring Boot backend, React frontend, and Nginx reverse proxy.
+- Backend staging and production-like profiles use MySQL and Flyway.
+- MySQL, backend, frontend, and Nginx health checks are configured.
+- `scripts/rollback-compose.sh` accepts an immutable image tag, uses locally available immutable images before attempting a registry pull, and verifies health after rollout.
+
+Executed production-like result:
+- The local production-like stack started with immutable tag `capstone-6e7a509-20260730194949` on port 8089.
+- MySQL, backend, frontend, and Nginx reached healthy status.
+- The backend log confirmed the active `production-like` profile.
+- `GET http://localhost:8089/actuator/health` returned `{"status":"UP"}`.
+- Frontend smoke check returned HTTP 200.
+
+Executed rollback result:
+- Rollback moved backend and frontend from `capstone-6e7a509-20260730194949` to `capstone-6e7a509-20260730194627`.
+- After rollback, all services were healthy; backend profile remained `production-like`.
+- Health check returned `{"status":"UP"}` and frontend smoke check returned HTTP 200.
+
+Evidence:
+- `reports/deployment/production-like-deployment.txt`
+- `reports/deployment/rollback-test.txt`
+
+No cloud or production deployment is claimed.

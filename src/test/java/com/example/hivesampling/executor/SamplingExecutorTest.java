@@ -30,4 +30,21 @@ class SamplingExecutorTest {
         assertTrue(context.shards.stream().allMatch(shard -> shard.innerSql.contains("FROM demo_db.sample_table")));
         assertTrue(logService.list("task-1").stream().anyMatch(entry -> entry.message.contains("created 3 shards")));
     }
+
+    @Test
+    void execute_ShouldNotCreateUnassignedShardsWhenFewerThanThreePartitionsAreSelected() {
+        TaskContext context = new TaskContext();
+        context.taskId = "task-2";
+        context.databaseName = "demo_db";
+        context.tableName = "sample_table";
+        context.selectedPartitions = List.of("2026-05-01", "2026-05-02");
+        TaskLogService logService = new TaskLogService();
+        SamplingExecutor executor = new SamplingExecutor(5, 1000, new SqlBuilderService(), logService);
+
+        executor.execute(context);
+
+        assertEquals(2, context.shards.size());
+        assertEquals(List.of("2026-05-01"), context.shards.get(0).partitionGroup);
+        assertEquals(List.of("2026-05-02"), context.shards.get(1).partitionGroup);
+    }
 }

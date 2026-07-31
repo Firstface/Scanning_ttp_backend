@@ -1,0 +1,253 @@
+Rebuilding staging images with IMAGE_TAG=capstone-6e7a509-20260730194627
+ Image scanning-ttp-backend:capstone-6e7a509-20260730194627 Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 592B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 823B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/maven:3.9-eclipse-temurin-17
+#3 DONE 0.1s
+
+#4 [internal] load metadata for docker.io/library/eclipse-temurin:17-jre-jammy
+#4 DONE 0.1s
+
+#5 [internal] load .dockerignore
+#5 transferring context: 2B done
+#5 DONE 0.0s
+
+#6 [stage-1 1/6] FROM docker.io/library/eclipse-temurin:17-jre-jammy@sha256:475d8e96b4b2bfe08999e5e854755c773af1581acdf959a4545d88f0696a2339
+#6 resolve docker.io/library/eclipse-temurin:17-jre-jammy@sha256:475d8e96b4b2bfe08999e5e854755c773af1581acdf959a4545d88f0696a2339 done
+#6 DONE 0.0s
+
+#7 [builder 1/6] FROM docker.io/library/maven:3.9-eclipse-temurin-17@sha256:1ed5d1f54416b706707b4f3238f63a20bb06aab27c6d240090a2bb9ad895ed45
+#7 resolve docker.io/library/maven:3.9-eclipse-temurin-17@sha256:1ed5d1f54416b706707b4f3238f63a20bb06aab27c6d240090a2bb9ad895ed45 done
+#7 DONE 0.0s
+
+#8 [internal] load build context
+#8 transferring context: 15.52kB 0.0s done
+#8 DONE 0.0s
+
+#9 [builder 3/6] COPY pom.xml .
+#9 CACHED
+
+#10 [builder 2/6] WORKDIR /app
+#10 CACHED
+
+#11 [builder 4/6] RUN mvn dependency:go-offline -B
+#11 CACHED
+
+#12 [builder 5/6] COPY src ./src
+#12 DONE 0.0s
+
+#13 [builder 6/6] RUN mvn clean package -DskipTests -B
+#13 0.769 [INFO] Scanning for projects...
+#13 0.860 [INFO] 
+#13 0.860 [INFO] ------------------< com.example:scanning_ttp_backend >------------------
+#13 0.860 [INFO] Building scanning_ttp_backend 0.0.1-SNAPSHOT
+#13 0.860 [INFO]   from pom.xml
+#13 0.860 [INFO] --------------------------------[ jar ]---------------------------------
+#13 1.096 [INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/tomcat/embed/tomcat-embed-core/10.1.55/tomcat-embed-core-10.1.55.pom
+#13 2.257 [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/tomcat/embed/tomcat-embed-core/10.1.55/tomcat-embed-core-10.1.55.pom (1.7 kB at 1.5 kB/s)
+#13 2.267 [INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/tomcat/embed/tomcat-embed-el/10.1.55/tomcat-embed-el-10.1.55.pom
+#13 2.464 [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/tomcat/embed/tomcat-embed-el/10.1.55/tomcat-embed-el-10.1.55.pom (1.5 kB at 7.6 kB/s)
+#13 2.468 [INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/tomcat/embed/tomcat-embed-websocket/10.1.55/tomcat-embed-websocket-10.1.55.pom
+#13 2.673 [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/tomcat/embed/tomcat-embed-websocket/10.1.55/tomcat-embed-websocket-10.1.55.pom (1.7 kB at 8.5 kB/s)
+#13 2.696 [INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/jboss/logging/jboss-logging/3.6.3.Final/jboss-logging-3.6.3.Final.pom
+#13 2.891 [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/jboss/logging/jboss-logging/3.6.3.Final/jboss-logging-3.6.3.Final.pom (23 kB at 116 kB/s)
+#13 2.899 [INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/jboss/jboss-parent/52/jboss-parent-52.pom
+#13 3.093 [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/jboss/jboss-parent/52/jboss-parent-52.pom (102 kB at 524 kB/s)
+#13 3.099 [INFO] Downloading from central: https://repo.maven.apache.org/maven2/com/fasterxml/classmate/1.7.3/classmate-1.7.3.pom
+#13 3.296 [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/com/fasterxml/classmate/1.7.3/classmate-1.7.3.pom (6.5 kB at 33 kB/s)
+#13 3.297 [INFO] Downloading from central: https://repo.maven.apache.org/maven2/com/fasterxml/oss-parent/74/oss-parent-74.pom
+#13 3.504 [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/com/fasterxml/oss-parent/74/oss-parent-74.pom (24 kB at 117 kB/s)
+#13 3.532 [INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/glassfish/jaxb/jaxb-runtime/4.0.6/jaxb-runtime-4.0.6.pom
+#13 3.726 [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/glassfish/jaxb/jaxb-runtime/4.0.6/jaxb-runtime-4.0.6.pom (11 kB at 56 kB/s)
+#13 3.728 [INFO] Downloading from central: https://repo.maven.apache.org/maven2/com/sun/xml/bind/mvn/jaxb-runtime-parent/4.0.6/jaxb-runtime-parent-4.0.6.pom
+#13 3.929 [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/com/sun/xml/bind/mvn/jaxb-runtime-parent/4.0.6/jaxb-runtime-parent-4.0.6.pom (1.2 kB at 5.9 kB/s)
+#13 3.931 [INFO] Downloading from central: https://repo.maven.apache.org/maven2/com/sun/xml/bind/mvn/jaxb-parent/4.0.6/jaxb-parent-4.0.6.pom
+#13 4.127 [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/com/sun/xml/bind/mvn/jaxb-parent/4.0.6/jaxb-parent-4.0.6.pom (35 kB at 180 kB/s)
+#13 4.136 [INFO] Downloading from central: https://repo.maven.apache.org/maven2/com/sun/xml/bind/jaxb-bom-ext/4.0.6/jaxb-bom-ext-4.0.6.pom
+#13 4.318 [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/com/sun/xml/bind/jaxb-bom-ext/4.0.6/jaxb-bom-ext-4.0.6.pom (3.5 kB at 19 kB/s)
+#13 4.329 [INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/glassfish/jaxb/jaxb-core/4.0.6/jaxb-core-4.0.6.pom
+#13 4.521 [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/glassfish/jaxb/jaxb-core/4.0.6/jaxb-core-4.0.6.pom (3.7 kB at 19 kB/s)
+#13 4.531 [INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/eclipse/angus/angus-activation/2.0.3/angus-activation-2.0.3.pom
+#13 4.722 [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/eclipse/angus/angus-activation/2.0.3/angus-activation-2.0.3.pom (4.0 kB at 21 kB/s)
+#13 4.727 [INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/eclipse/angus/angus-activation-project/2.0.3/angus-activation-project-2.0.3.pom
+#13 4.919 [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/eclipse/angus/angus-activation-project/2.0.3/angus-activation-project-2.0.3.pom (21 kB at 109 kB/s)
+#13 4.922 [INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/glassfish/jaxb/txw2/4.0.6/txw2-4.0.6.pom
+#13 5.114 [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/glassfish/jaxb/txw2/4.0.6/txw2-4.0.6.pom (1.8 kB at 9.3 kB/s)
+#13 5.115 [INFO] Downloading from central: https://repo.maven.apache.org/maven2/com/sun/xml/bind/mvn/jaxb-txw-parent/4.0.6/jaxb-txw-parent-4.0.6.pom
+#13 5.300 [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/com/sun/xml/bind/mvn/jaxb-txw-parent/4.0.6/jaxb-txw-parent-4.0.6.pom (1.2 kB at 6.5 kB/s)
+#13 5.303 [INFO] Downloading from central: https://repo.maven.apache.org/maven2/com/sun/istack/istack-commons-runtime/4.1.2/istack-commons-runtime-4.1.2.pom
+#13 5.503 [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/com/sun/istack/istack-commons-runtime/4.1.2/istack-commons-runtime-4.1.2.pom (1.6 kB at 8.1 kB/s)
+#13 5.504 [INFO] Downloading from central: https://repo.maven.apache.org/maven2/com/sun/istack/istack-commons/4.1.2/istack-commons-4.1.2.pom
+#13 5.702 [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/com/sun/istack/istack-commons/4.1.2/istack-commons-4.1.2.pom (26 kB at 133 kB/s)
+#13 5.726 [INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/aspectj/aspectjweaver/1.9.25.1/aspectjweaver-1.9.25.1.pom
+#13 5.933 [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/aspectj/aspectjweaver/1.9.25.1/aspectjweaver-1.9.25.1.pom (1.7 kB at 8.1 kB/s)
+#13 5.957 [INFO] Downloading from central: https://repo.maven.apache.org/maven2/com/fasterxml/jackson/dataformat/jackson-dataformat-toml/2.21.2/jackson-dataformat-toml-2.21.2.pom
+#13 6.181 [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/com/fasterxml/jackson/dataformat/jackson-dataformat-toml/2.21.2/jackson-dataformat-toml-2.21.2.pom (3.8 kB at 17 kB/s)
+#13 6.186 [INFO] Downloading from central: https://repo.maven.apache.org/maven2/com/fasterxml/jackson/dataformat/jackson-dataformats-text/2.21.2/jackson-dataformats-text-2.21.2.pom
+#13 6.382 [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/com/fasterxml/jackson/dataformat/jackson-dataformats-text/2.21.2/jackson-dataformats-text-2.21.2.pom (3.5 kB at 18 kB/s)
+#13 6.433 [INFO] Downloading from central: https://repo.maven.apache.org/maven2/net/bytebuddy/byte-buddy-agent/1.17.8/byte-buddy-agent-1.17.8.pom
+#13 6.617 [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/net/bytebuddy/byte-buddy-agent/1.17.8/byte-buddy-agent-1.17.8.pom (14 kB at 78 kB/s)
+#13 6.719 [INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/tomcat/embed/tomcat-embed-core/10.1.55/tomcat-embed-core-10.1.55.jar
+#13 7.891 [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/tomcat/embed/tomcat-embed-core/10.1.55/tomcat-embed-core-10.1.55.jar (3.7 MB at 3.1 MB/s)
+#13 7.896 [INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/tomcat/embed/tomcat-embed-el/10.1.55/tomcat-embed-el-10.1.55.jar
+#13 7.896 [INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/jboss/logging/jboss-logging/3.6.3.Final/jboss-logging-3.6.3.Final.jar
+#13 7.896 [INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/tomcat/embed/tomcat-embed-websocket/10.1.55/tomcat-embed-websocket-10.1.55.jar
+#13 7.898 [INFO] Downloading from central: https://repo.maven.apache.org/maven2/com/fasterxml/classmate/1.7.3/classmate-1.7.3.jar
+#13 7.899 [INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/glassfish/jaxb/jaxb-runtime/4.0.6/jaxb-runtime-4.0.6.jar
+#13 8.087 [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/tomcat/embed/tomcat-embed-el/10.1.55/tomcat-embed-el-10.1.55.jar (264 kB at 1.4 MB/s)
+#13 8.088 [INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/glassfish/jaxb/jaxb-core/4.0.6/jaxb-core-4.0.6.jar
+#13 8.294 [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/glassfish/jaxb/jaxb-core/4.0.6/jaxb-core-4.0.6.jar (138 kB at 352 kB/s)
+#13 8.294 [INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/eclipse/angus/angus-activation/2.0.3/angus-activation-2.0.3.jar
+#13 8.492 [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/eclipse/angus/angus-activation/2.0.3/angus-activation-2.0.3.jar (27 kB at 45 kB/s)
+#13 8.492 [INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/glassfish/jaxb/txw2/4.0.6/txw2-4.0.6.jar
+#13 8.512 [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/jboss/logging/jboss-logging/3.6.3.Final/jboss-logging-3.6.3.Final.jar (63 kB at 102 kB/s)
+#13 8.513 [INFO] Downloading from central: https://repo.maven.apache.org/maven2/com/sun/istack/istack-commons-runtime/4.1.2/istack-commons-runtime-4.1.2.jar
+#13 8.578 [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/com/fasterxml/classmate/1.7.3/classmate-1.7.3.jar (68 kB at 100 kB/s)
+#13 8.578 [INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/aspectj/aspectjweaver/1.9.25.1/aspectjweaver-1.9.25.1.jar
+#13 8.745 [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/com/sun/istack/istack-commons-runtime/4.1.2/istack-commons-runtime-4.1.2.jar (26 kB at 30 kB/s)
+#13 8.745 [INFO] Downloading from central: https://repo.maven.apache.org/maven2/com/fasterxml/jackson/dataformat/jackson-dataformat-toml/2.21.2/jackson-dataformat-toml-2.21.2.jar
+#13 8.747 [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/glassfish/jaxb/txw2/4.0.6/txw2-4.0.6.jar (73 kB at 86 kB/s)
+#13 8.747 [INFO] Downloading from central: https://repo.maven.apache.org/maven2/net/bytebuddy/byte-buddy-agent/1.17.8/byte-buddy-agent-1.17.8.jar
+#13 8.895 [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/tomcat/embed/tomcat-embed-websocket/10.1.55/tomcat-embed-websocket-10.1.55.jar (284 kB at 284 kB/s)
+#13 8.976 [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/net/bytebuddy/byte-buddy-agent/1.17.8/byte-buddy-agent-1.17.8.jar (367 kB at 340 kB/s)
+#13 8.980 [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/com/fasterxml/jackson/dataformat/jackson-dataformat-toml/2.21.2/jackson-dataformat-toml-2.21.2.jar (58 kB at 53 kB/s)
+#13 9.073 [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/glassfish/jaxb/jaxb-runtime/4.0.6/jaxb-runtime-4.0.6.jar (920 kB at 782 kB/s)
+#13 9.758 [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/aspectj/aspectjweaver/1.9.25.1/aspectjweaver-1.9.25.1.jar (2.2 MB at 1.2 MB/s)
+#13 9.783 [INFO] 
+#13 9.783 [INFO] --- clean:3.4.1:clean (default-clean) @ scanning_ttp_backend ---
+#13 9.828 [INFO] 
+#13 9.828 [INFO] --- jacoco:0.8.14:prepare-agent (jacoco-initialize) @ scanning_ttp_backend ---
+#13 9.904 [INFO] argLine set to -javaagent:/root/.m2/repository/org/jacoco/org.jacoco.agent/0.8.14/org.jacoco.agent-0.8.14-runtime.jar=destfile=/app/target/jacoco.exec
+#13 9.904 [INFO] 
+#13 9.904 [INFO] --- resources:3.3.1:resources (default-resources) @ scanning_ttp_backend ---
+#13 9.952 [INFO] Copying 5 resources from src/main/resources to target/classes
+#13 9.960 [INFO] Copying 4 resources from src/main/resources to target/classes
+#13 9.960 [INFO] 
+#13 9.960 [INFO] --- compiler:3.14.1:compile (default-compile) @ scanning_ttp_backend ---
+#13 10.05 [INFO] Recompiling the module because of changed source code.
+#13 10.06 [INFO] Compiling 60 source files with javac [debug parameters release 17] to target/classes
+#13 10.93 [INFO] /app/src/main/java/com/example/hivesampling/util/JwtUtil.java: Some input files use or override a deprecated API.
+#13 10.93 [INFO] /app/src/main/java/com/example/hivesampling/util/JwtUtil.java: Recompile with -Xlint:deprecation for details.
+#13 10.93 [INFO] 
+#13 10.93 [INFO] --- resources:3.3.1:testResources (default-testResources) @ scanning_ttp_backend ---
+#13 10.94 [INFO] Copying 1 resource from src/test/resources to target/test-classes
+#13 10.95 [INFO] 
+#13 10.95 [INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ scanning_ttp_backend ---
+#13 10.95 [INFO] Recompiling the module because of changed dependency.
+#13 10.95 [INFO] Compiling 20 source files with javac [debug parameters release 17] to target/test-classes
+#13 11.30 [INFO] 
+#13 11.30 [INFO] --- surefire:3.5.5:test (default-test) @ scanning_ttp_backend ---
+#13 11.43 [INFO] Tests are skipped.
+#13 11.43 [INFO] 
+#13 11.43 [INFO] --- jacoco:0.8.14:report (jacoco-report) @ scanning_ttp_backend ---
+#13 11.44 [INFO] Skipping JaCoCo execution due to missing execution data file.
+#13 11.44 [INFO] 
+#13 11.44 [INFO] --- jar:3.4.2:jar (default-jar) @ scanning_ttp_backend ---
+#13 11.54 [INFO] Building jar: /app/target/scanning_ttp_backend-0.0.1-SNAPSHOT.jar
+#13 11.58 [INFO] 
+#13 11.58 [INFO] --- spring-boot:3.5.14:repackage (repackage) @ scanning_ttp_backend ---
+#13 12.14 [INFO] Replacing main artifact /app/target/scanning_ttp_backend-0.0.1-SNAPSHOT.jar with repackaged archive, adding nested dependencies in BOOT-INF/.
+#13 12.14 [INFO] The original artifact has been renamed to /app/target/scanning_ttp_backend-0.0.1-SNAPSHOT.jar.original
+#13 12.14 [INFO] ------------------------------------------------------------------------
+#13 12.14 [INFO] BUILD SUCCESS
+#13 12.14 [INFO] ------------------------------------------------------------------------
+#13 12.14 [INFO] Total time:  11.378 s
+#13 12.14 [INFO] Finished at: 2026-07-30T11:46:40Z
+#13 12.14 [INFO] ------------------------------------------------------------------------
+#13 DONE 12.2s
+
+#14 [stage-1 2/6] WORKDIR /app
+#14 CACHED
+
+#15 [stage-1 3/6] RUN apt-get update && apt-get install -y --no-install-recommends wget && apt-get clean
+#15 CACHED
+
+#16 [stage-1 4/6] RUN groupadd --system app && useradd --system --gid app --create-home app
+#16 CACHED
+
+#17 [stage-1 5/6] COPY --from=builder /app/target/*.jar app.jar
+#17 DONE 0.1s
+
+#18 [stage-1 6/6] RUN chown app:app /app/app.jar
+#18 DONE 0.2s
+
+#19 exporting to image
+#19 exporting layers
+#19 exporting layers 1.3s done
+#19 exporting manifest sha256:c0cec050974009905e7628588ba99a309d6a3767218350d8e4db1dcf5494a89a done
+#19 exporting config sha256:29641d21e87351628d934fde3507488e425864ac2c42eb330d4b6df200fd417f done
+#19 exporting attestation manifest sha256:9e52f396228e0a54bee75864574738b949b552fece7a746a0a2792aa2c0035fd done
+#19 exporting manifest list sha256:11c63250074b53a7a313e16fbf1f65f8ee19f5664b6db0839cf4d32bfe0ba234 done
+#19 naming to docker.io/library/scanning-ttp-backend:capstone-6e7a509-20260730194627 done
+#19 unpacking to docker.io/library/scanning-ttp-backend:capstone-6e7a509-20260730194627
+#19 unpacking to docker.io/library/scanning-ttp-backend:capstone-6e7a509-20260730194627 0.8s done
+#19 DONE 2.2s
+
+#20 resolving provenance for metadata file
+#20 DONE 0.0s
+ Image scanning-ttp-backend:capstone-6e7a509-20260730194627 Built 
+ Container deploy-nginx-proxy-1 Stopping 
+ Container deploy-nginx-proxy-1 Stopped 
+ Container deploy-nginx-proxy-1 Removing 
+ Container deploy-nginx-proxy-1 Removed 
+ Container deploy-frontend-1 Stopping 
+ Container deploy-frontend-1 Stopped 
+ Container deploy-frontend-1 Removing 
+ Container deploy-frontend-1 Removed 
+ Container deploy-backend-1 Stopping 
+ Container deploy-backend-1 Stopped 
+ Container deploy-backend-1 Removing 
+ Container deploy-backend-1 Removed 
+ Container deploy-mysql-1 Stopping 
+ Container deploy-mysql-1 Stopped 
+ Container deploy-mysql-1 Removing 
+ Container deploy-mysql-1 Removed 
+ Network deploy_scanning-network Removing 
+ Volume deploy_mysql-data Removing 
+ Volume deploy_mysql-data Removed 
+ Network deploy_scanning-network Removed 
+ Network deploy_scanning-network Creating 
+ Network deploy_scanning-network Created 
+ Volume deploy_mysql-data Creating 
+ Volume deploy_mysql-data Created 
+ Container deploy-mysql-1 Creating 
+ Container deploy-mysql-1 Created 
+ Container deploy-backend-1 Creating 
+ Container deploy-backend-1 Created 
+ Container deploy-frontend-1 Creating 
+ Container deploy-frontend-1 Created 
+ Container deploy-nginx-proxy-1 Creating 
+ Container deploy-nginx-proxy-1 Created 
+ Container deploy-mysql-1 Starting 
+ Container deploy-mysql-1 Started 
+ Container deploy-mysql-1 Waiting 
+ Container deploy-mysql-1 Healthy 
+ Container deploy-backend-1 Starting 
+ Container deploy-backend-1 Started 
+ Container deploy-backend-1 Waiting 
+ Container deploy-backend-1 Healthy 
+ Container deploy-frontend-1 Starting 
+ Container deploy-frontend-1 Started 
+ Container deploy-backend-1 Waiting 
+ Container deploy-backend-1 Healthy 
+ Container deploy-nginx-proxy-1 Starting 
+ Container deploy-nginx-proxy-1 Started 
+ Container deploy-mysql-1 Waiting 
+ Container deploy-backend-1 Waiting 
+ Container deploy-frontend-1 Waiting 
+ Container deploy-nginx-proxy-1 Waiting 
+ Container deploy-frontend-1 Healthy 
+ Container deploy-backend-1 Healthy 
+ Container deploy-mysql-1 Healthy 
+ Container deploy-nginx-proxy-1 Healthy 
+NAME                   IMAGE                                                   COMMAND                  SERVICE       CREATED          STATUS                    PORTS
+deploy-backend-1       scanning-ttp-backend:capstone-6e7a509-20260730194627    "/__cacert_entrypoin…"   backend       28 seconds ago   Up 16 seconds (healthy)   8080/tcp
+deploy-frontend-1      scanning-ttp-frontend:capstone-6e7a509-20260730194627   "/docker-entrypoint.…"   frontend      28 seconds ago   Up 11 seconds             80/tcp
+deploy-mysql-1         mysql:8.4.4                                             "docker-entrypoint.s…"   mysql         28 seconds ago   Up 27 seconds (healthy)   3306/tcp, 33060/tcp
+deploy-nginx-proxy-1   deploy-nginx-proxy                                      "/docker-entrypoint.…"   nginx-proxy   28 seconds ago   Up 10 seconds (healthy)   0.0.0.0:8088->80/tcp, [::]:8088->80/tcp

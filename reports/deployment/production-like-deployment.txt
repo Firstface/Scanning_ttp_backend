@@ -1,0 +1,85 @@
+ Container deploy-nginx-proxy-1 Stopping 
+ Container deploy-nginx-proxy-1 Stopped 
+ Container deploy-nginx-proxy-1 Removing 
+ Container deploy-nginx-proxy-1 Removed 
+ Container deploy-frontend-1 Stopping 
+ Container deploy-frontend-1 Stopped 
+ Container deploy-frontend-1 Removing 
+ Container deploy-frontend-1 Removed 
+ Container deploy-backend-1 Stopping 
+ Container deploy-backend-1 Stopped 
+ Container deploy-backend-1 Removing 
+ Container deploy-backend-1 Removed 
+ Container deploy-mysql-1 Stopping 
+ Container deploy-mysql-1 Stopped 
+ Container deploy-mysql-1 Removing 
+ Container deploy-mysql-1 Removed 
+ Network deploy_scanning-network Removing 
+ Volume deploy_mysql-data Removing 
+ Volume deploy_mysql-data Removed 
+ Network deploy_scanning-network Removed 
+ Network deploy_scanning-network Creating 
+ Network deploy_scanning-network Created 
+ Volume deploy_mysql-data Creating 
+ Volume deploy_mysql-data Created 
+ Container deploy-mysql-1 Creating 
+ Container deploy-mysql-1 Created 
+ Container deploy-backend-1 Creating 
+ Container deploy-backend-1 Created 
+ Container deploy-frontend-1 Creating 
+ Container deploy-frontend-1 Created 
+ Container deploy-nginx-proxy-1 Creating 
+ Container deploy-nginx-proxy-1 Created 
+ Container deploy-mysql-1 Starting 
+ Container deploy-mysql-1 Started 
+ Container deploy-mysql-1 Waiting 
+ Container deploy-mysql-1 Healthy 
+ Container deploy-backend-1 Starting 
+ Container deploy-backend-1 Started 
+ Container deploy-backend-1 Waiting 
+ Container deploy-backend-1 Healthy 
+ Container deploy-frontend-1 Starting 
+ Container deploy-frontend-1 Started 
+ Container deploy-backend-1 Waiting 
+ Container deploy-backend-1 Healthy 
+ Container deploy-nginx-proxy-1 Starting 
+ Container deploy-nginx-proxy-1 Started 
+ Container deploy-backend-1 Waiting 
+ Container deploy-frontend-1 Waiting 
+ Container deploy-nginx-proxy-1 Waiting 
+ Container deploy-mysql-1 Waiting 
+ Container deploy-mysql-1 Healthy 
+ Container deploy-backend-1 Healthy 
+ Container deploy-frontend-1 Healthy 
+ Container deploy-nginx-proxy-1 Healthy 
+NAME                   IMAGE                                                   COMMAND                  SERVICE       CREATED          STATUS                    PORTS
+deploy-backend-1       scanning-ttp-backend:capstone-6e7a509-20260730194949    "/__cacert_entrypoin…"   backend       33 seconds ago   Up 21 seconds (healthy)   8080/tcp
+deploy-frontend-1      scanning-ttp-frontend:capstone-6e7a509-20260730194949   "/docker-entrypoint.…"   frontend      33 seconds ago   Up 11 seconds             80/tcp
+deploy-mysql-1         mysql:8.4.4                                             "docker-entrypoint.s…"   mysql         33 seconds ago   Up 32 seconds (healthy)   3306/tcp, 33060/tcp
+deploy-nginx-proxy-1   deploy-nginx-proxy                                      "/docker-entrypoint.…"   nginx-proxy   32 seconds ago   Up 10 seconds (healthy)   0.0.0.0:8089->80/tcp, [::]:8089->80/tcp
+
+Health check:
+HTTP/1.1 200 
+Server: nginx/1.31.3
+Date: Fri, 31 Jul 2026 06:56:50 GMT
+Content-Type: application/vnd.spring-boot.actuator.v3+json
+Transfer-Encoding: chunked
+Connection: keep-alive
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+
+{"status":"UP"}
+Frontend smoke:
+HTTP/1.1 200 OK
+Server: nginx/1.31.3
+Date: Fri, 31 Jul 2026 06:56:50 GMT
+Content-Type: text/html
+Content-Length: 373
+Connection: keep-alive
+Last-Modified: Thu, 14 May 2026 09:05:38 GMT
+ETag: "6a059062-175"
+Accept-Ranges: bytes
+
+
+completed

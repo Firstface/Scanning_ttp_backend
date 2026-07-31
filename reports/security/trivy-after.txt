@@ -1,0 +1,3 @@
+Status: Configured but not executed
+
+A post-remediation Trivy scan was not run because the baseline filesystem scan could not download and verify the vulnerability database. Docker Desktop is also unavailable, so no image build or image scan was possible. No historical findings or remediation counts are reused.

@@ -1,0 +1,3 @@
+valid YAML: .github/workflows/cd.yml
+valid YAML: .github/workflows/ci.yml
+valid YAML: .github/workflows/rollback.yml

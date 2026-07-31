@@ -1,16 +1,5 @@
+Current verification cycle status: Configured but not executed.
 
-2026-05-15T11:35:00+08:00	INFO	Detected OS: alpine
-2026-05-15T11:35:00+08:00	INFO	Detecting Alpine vulnerabilities...
-2026-05-15T11:35:00+08:00	INFO	Number of language-specific files: 0
+Trivy 0.72.0 was invoked for a filesystem scan. The default vulnerability database mirror timed out; a retry against ghcr.io/aquasecurity/trivy-db failed TLS certificate verification. Docker Engine and Compose are available, but the application image build also failed Docker Hub TLS verification, so no image scan was possible. No CVE or severity count is claimed.
 
-scanning-ttp-backend:local (alpine 3.19.1)
-==========================================
-Total: 3 (HIGH: 3, CRITICAL: 0)
-
-┌─────────────────┬────────────────┬──────────┬───────────────────┬───────────────┬──────────────────────────────────────────────────────────────┐
-│     Library     │ Vulnerability  │ Severity │ Installed Version │ Fixed Version │                           Title                            │
-├─────────────────┼────────────────┼──────────┼───────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
-│ libcrypto3      │ CVE-2024-2231 │ HIGH     │ 3.1.4-r5          │ 3.1.5-r0      │ Invalid PKCS#12 files can cause NULL dereference            │
-│ libssl3         │ CVE-2024-2231 │ HIGH     │ 3.1.4-r5          │ 3.1.5-r0      │ Invalid PKCS#12 files can cause NULL dereference            │
-│ busybox         │ CVE-2024-1102 │ HIGH     │ 1.36.1-r15        │ 1.36.1-r17    │ Stack-based buffer overflow in httpd function               │
-└─────────────────┴────────────────┴──────────┴───────────────────┴───────────────┴──────────────────────────────────────────────────────────────┘
+Evidence: reports/security/trivy-before.txt, reports/security/trivy-fs-before-console.txt, reports/security/vulnerability-resolution.md.

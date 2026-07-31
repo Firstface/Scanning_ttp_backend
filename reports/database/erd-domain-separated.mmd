@@ -1,0 +1,16 @@
+flowchart LR
+  subgraph Identity
+    AppUser[app_user] -->|1:N| UserRole[user_role]
+    AppRole[app_role] -->|1:N| UserRole
+  end
+  subgraph Task_Orchestration
+    ValidationTask[validation_task] -->|1:N| TaskRun[task_run]
+  end
+  subgraph Sampling_and_Execution
+    TaskRun -->|1:N| Sampling[sampling]
+    Sampling -->|1:N| ShardTask[shard_task]
+  end
+  subgraph Audit
+    TaskRun -->|1:N| TaskLog[task_log]
+    TaskRun -->|1:N| AuditEvent[audit_event]
+  end

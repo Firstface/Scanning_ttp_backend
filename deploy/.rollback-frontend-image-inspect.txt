@@ -1,0 +1,80 @@
+[
+    {
+        "Id": "sha256:fe2d0a91c92f2a133595548c4384c133e50c8a18d7e8bd31dcecf638d3d96b77",
+        "RepoTags": [
+            "scanning-ttp-frontend:capstone-6e7a509-20260730190122",
+            "scanning-ttp-frontend:capstone-6e7a509-20260730194627",
+            "scanning-ttp-frontend:capstone-6e7a509-20260730194949"
+        ],
+        "RepoDigests": [
+            "scanning-ttp-frontend@sha256:fe2d0a91c92f2a133595548c4384c133e50c8a18d7e8bd31dcecf638d3d96b77"
+        ],
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2026-07-30T11:02:27.984124637Z",
+        "Config": {
+            "ExposedPorts": {
+                "80/tcp": {}
+            },
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "NGINX_VERSION=1.31.3",
+                "PKG_RELEASE=1",
+                "DYNPKG_RELEASE=1",
+                "NJS_VERSION=1.0.0",
+                "NJS_RELEASE=1",
+                "ACME_VERSION=0.4.1"
+            ],
+            "Entrypoint": [
+                "/docker-entrypoint.sh"
+            ],
+            "Cmd": [
+                "nginx",
+                "-g",
+                "daemon off;"
+            ],
+            "WorkingDir": "/",
+            "Labels": {
+                "com.docker.compose.project": "deploy",
+                "com.docker.compose.service": "frontend",
+                "com.docker.compose.version": "5.3.1",
+                "maintainer": "NGINX Docker Maintainers <docker-maint@nginx.com>"
+            },
+            "StopSignal": "SIGQUIT",
+            "ArgsEscaped": true
+        },
+        "Architecture": "arm64",
+        "Os": "linux",
+        "Size": 26052218,
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:b2848c02ac6ff53d265469b5b30f649f335e546a83330cd8916d54e65e640409",
+                "sha256:abc80d278f949bb856601b1b47c8c43177c8d00dfcd27c2545af746ed024bd3d",
+                "sha256:2d381a04fd293084742bcf5ba20c0f386ac187407b303fb74fc33b0881ef591f",
+                "sha256:afdca8176229f1df4c7e906623fb386b63d999798d2d527fc02a84b4e0d61f3b",
+                "sha256:b16a6edda0b21ae8f93581e1f27fd6ddc3ac9307e7772cf3c7ad59d2e9c4e57c",
+                "sha256:5d0730634ef829f5dd7c98af7549dce6b4b730e81d7b17f20235f1e124b14344",
+                "sha256:952704e3efa61fe7b446ca354ef477c9e1e48b2b2d9900824882171d53dd23fd",
+                "sha256:70608c9ec24cd12b5a6abe2ddf65f40ba695fed8adb380462529923a4f37d98d",
+                "sha256:0129e42634cbd0b519f3dad5ff01a37f02fac0d0087ee6c0bbc0cf4fb95549ee",
+                "sha256:31b363c15e1368565e8810dbba70e3317c078d81129f79f52f489ad6b159404c"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-07-30T11:49:49.834091216Z"
+        },
+        "Descriptor": {
+            "mediaType": "application/vnd.oci.image.index.v1+json",
+            "digest": "sha256:fe2d0a91c92f2a133595548c4384c133e50c8a18d7e8bd31dcecf638d3d96b77",
+            "size": 856
+        },
+        "Identity": {
+            "Build": [
+                {
+                    "Ref": "x5sntkp6apgo30rmkvukkc08u",
+                    "CreatedAt": "2026-07-30T11:02:28.038067595Z"
+                }
+            ]
+        }
+    }
+]

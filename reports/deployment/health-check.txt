@@ -1,0 +1,6 @@
+NAME                   IMAGE                                                   COMMAND                  SERVICE       CREATED              STATUS                        PORTS
+deploy-backend-1       scanning-ttp-backend:capstone-6e7a509-20260730190122    "/__cacert_entrypoin…"   backend       About a minute ago   Up About a minute (healthy)   8080/tcp
+deploy-frontend-1      scanning-ttp-frontend:capstone-6e7a509-20260730190122   "/docker-entrypoint.…"   frontend      About a minute ago   Up About a minute             80/tcp
+deploy-mysql-1         mysql:8.4.4                                             "docker-entrypoint.s…"   mysql         About a minute ago   Up About a minute (healthy)   3306/tcp, 33060/tcp
+deploy-nginx-proxy-1   deploy-nginx-proxy                                      "/docker-entrypoint.…"   nginx-proxy   About a minute ago   Up About a minute (healthy)   0.0.0.0:8088->80/tcp, [::]:8088->80/tcp
+{"status":"UP"}HTTP/1.1 200 OK

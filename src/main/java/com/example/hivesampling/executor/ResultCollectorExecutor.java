@@ -1,11 +1,13 @@
 package com.example.hivesampling.executor;
 
+import com.example.hivesampling.adapter.QueryResultServiceAdapter;
 import com.example.hivesampling.model.ExecutorResult;
 import com.example.hivesampling.model.ShardTask;
 import com.example.hivesampling.model.ShardTaskStatus;
 import com.example.hivesampling.model.TaskContext;
 import com.example.hivesampling.pipeline.SampleTaskExecutor;
-import com.example.hivesampling.service.TaskLogService;
+import com.example.hivesampling.service.TaskLogStore;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -16,11 +18,18 @@ import java.util.Random;
 @Component
 public class ResultCollectorExecutor implements SampleTaskExecutor {
 
-    private final TaskLogService taskLogService;
+    private final TaskLogStore taskLogService;
+    private final QueryResultServiceAdapter queryResultServiceAdapter;
     private final Random random = new Random();
 
-    public ResultCollectorExecutor(TaskLogService taskLogService) {
+    @Autowired
+    public ResultCollectorExecutor(TaskLogStore taskLogService, QueryResultServiceAdapter queryResultServiceAdapter) {
         this.taskLogService = taskLogService;
+        this.queryResultServiceAdapter = queryResultServiceAdapter;
+    }
+
+    public ResultCollectorExecutor(TaskLogStore taskLogService) {
+        this(taskLogService, new com.example.hivesampling.adapter.MockQueryResultServiceAdapter());
     }
 
     @Override
@@ -34,7 +43,7 @@ public class ResultCollectorExecutor implements SampleTaskExecutor {
         
         for (ShardTask shard : shards) {
             if (shard.status == ShardTaskStatus.SUCCESS) {
-                totalSampled += shard.sampledRows;
+                totalSampled += queryResultServiceAdapter.collectRows(shard);
                 completedShards++;
             }
         }

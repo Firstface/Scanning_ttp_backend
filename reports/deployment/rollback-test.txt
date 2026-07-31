@@ -1,0 +1,76 @@
+current_tag=capstone-6e7a509-20260730194949
+rollback_tag=capstone-6e7a509-20260730194627
+profile=production-like
+http_port=8089
+
+Health before rollback:
+HTTP/1.1 200 
+Server: nginx/1.31.3
+Date: Fri, 31 Jul 2026 06:57:48 GMT
+Content-Type: application/vnd.spring-boot.actuator.v3+json
+Transfer-Encoding: chunked
+Connection: keep-alive
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+
+{"status":"UP"}
+Rollback command:
+ Container deploy-nginx-proxy-1 Running 
+ Container deploy-mysql-1 Running 
+ Container deploy-backend-1 Recreate 
+ Container deploy-backend-1 Recreated 
+ Container deploy-frontend-1 Recreate 
+ Container deploy-frontend-1 Recreated 
+ Container deploy-mysql-1 Waiting 
+ Container deploy-mysql-1 Healthy 
+ Container deploy-backend-1 Starting 
+ Container deploy-backend-1 Started 
+ Container deploy-backend-1 Waiting 
+ Container deploy-backend-1 Healthy 
+ Container deploy-frontend-1 Starting 
+ Container deploy-frontend-1 Started 
+ Container deploy-backend-1 Waiting 
+ Container deploy-backend-1 Healthy 
+ Container deploy-frontend-1 Waiting 
+ Container deploy-nginx-proxy-1 Waiting 
+ Container deploy-mysql-1 Waiting 
+ Container deploy-backend-1 Waiting 
+ Container deploy-mysql-1 Healthy 
+ Container deploy-backend-1 Healthy 
+ Container deploy-nginx-proxy-1 Healthy 
+ Container deploy-frontend-1 Healthy 
+{"status":"UP"}rollback completed: image tag=capstone-6e7a509-20260730194627 profile=production-like
+
+Compose state after rollback:
+NAME                   IMAGE                                                   COMMAND                  SERVICE       CREATED              STATUS                        PORTS
+deploy-backend-1       scanning-ttp-backend:capstone-6e7a509-20260730194627    "/__cacert_entrypoin…"   backend       8 seconds ago        Up 6 seconds (healthy)        8080/tcp
+deploy-frontend-1      scanning-ttp-frontend:capstone-6e7a509-20260730194627   "/docker-entrypoint.…"   frontend      7 seconds ago        Up 1 second                   80/tcp
+deploy-mysql-1         mysql:8.4.4                                             "docker-entrypoint.s…"   mysql         About a minute ago   Up About a minute (healthy)   3306/tcp, 33060/tcp
+deploy-nginx-proxy-1   deploy-nginx-proxy                                      "/docker-entrypoint.…"   nginx-proxy   About a minute ago   Up About a minute (healthy)   0.0.0.0:8089->80/tcp, [::]:8089->80/tcp
+
+Health after rollback:
+HTTP/1.1 200 
+Server: nginx/1.31.3
+Date: Fri, 31 Jul 2026 06:57:56 GMT
+Content-Type: application/vnd.spring-boot.actuator.v3+json
+Transfer-Encoding: chunked
+Connection: keep-alive
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+
+{"status":"UP"}
+Frontend smoke after rollback:
+HTTP/1.1 200 OK
+Server: nginx/1.31.3
+Date: Fri, 31 Jul 2026 06:57:57 GMT
+Content-Type: text/html
+Content-Length: 373
+Connection: keep-alive
+Last-Modified: Thu, 14 May 2026 09:05:38 GMT
+ETag: "6a059062-175"
+Accept-Ranges: bytes
+
+
+completed

@@ -4,7 +4,7 @@ import com.example.hivesampling.model.ExecutorResult;
 import com.example.hivesampling.model.ParentTaskStatus;
 import com.example.hivesampling.model.TaskContext;
 import com.example.hivesampling.pipeline.SampleTaskExecutor;
-import com.example.hivesampling.service.TaskLogService;
+import com.example.hivesampling.service.TaskLogStore;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -14,10 +14,10 @@ import java.util.Random;
 @Component
 public class FinalizeTaskExecutor implements SampleTaskExecutor {
 
-    private final TaskLogService taskLogService;
+    private final TaskLogStore taskLogService;
     private final Random random = new Random();
 
-    public FinalizeTaskExecutor(TaskLogService taskLogService) {
+    public FinalizeTaskExecutor(TaskLogStore taskLogService) {
         this.taskLogService = taskLogService;
     }
 

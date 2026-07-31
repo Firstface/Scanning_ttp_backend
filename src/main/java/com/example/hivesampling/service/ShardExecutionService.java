@@ -16,11 +16,11 @@ import java.util.concurrent.ThreadLocalRandom;
 public class ShardExecutionService {
 
     private final ExecutorService workerPool;
-    private final TaskLogService taskLogService;
+    private final TaskLogStore taskLogService;
 
     public ShardExecutionService(
             @Value("${sampling.worker-pool-size:4}") int workerPoolSize,
-            TaskLogService taskLogService) {
+            TaskLogStore taskLogService) {
         this.workerPool = Executors.newFixedThreadPool(workerPoolSize);
         this.taskLogService = taskLogService;
     }

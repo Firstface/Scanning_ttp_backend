@@ -6,7 +6,7 @@ import com.example.hivesampling.model.ParentTaskStatus;
 import com.example.hivesampling.model.ShardTask;
 import com.example.hivesampling.model.TaskContext;
 import com.example.hivesampling.pipeline.PipelineRunner;
-import com.example.hivesampling.repository.InMemoryTaskRepository;
+import com.example.hivesampling.repository.TaskStore;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,14 +18,15 @@ import java.util.concurrent.Executors;
 @Service
 public class SampleTaskService {
 
-    private final InMemoryTaskRepository taskRepository;
+    private final TaskStore taskRepository;
     private final PipelineRunner pipelineRunner;
-    private final TaskLogService taskLogService;
+    private final TaskLogStore taskLogService;
     private final ExecutorService executorService = Executors.newCachedThreadPool();
+    private final Object taskCreationLock = new Object();
 
-    public SampleTaskService(InMemoryTaskRepository taskRepository,
+    public SampleTaskService(TaskStore taskRepository,
                              PipelineRunner pipelineRunner,
-                             TaskLogService taskLogService) {
+                             TaskLogStore taskLogService) {
         this.taskRepository = taskRepository;
         this.pipelineRunner = pipelineRunner;
         this.taskLogService = taskLogService;
@@ -39,7 +40,9 @@ public class SampleTaskService {
         context.targetSampleRows = request.targetSampleRows;
         context.selectedPartitions = request.selectedPartitions;
         context.changeStatus(ParentTaskStatus.CREATED);
-        taskRepository.save(context);
+        synchronized (taskCreationLock) {
+            taskRepository.save(context);
+        }
 
         taskLogService.info(context.taskId, "Parent task created");
         

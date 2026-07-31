@@ -1,0 +1,8 @@
+erDiagram
+  APP_USER ||--o{ USER_ROLE : has
+  APP_ROLE ||--o{ USER_ROLE : grants
+  VALIDATION_TASK ||--o{ TASK_RUN : contains
+  TASK_RUN ||--o{ SAMPLING : contains
+  SAMPLING ||--o{ SHARD_TASK : contains
+  TASK_RUN ||--o{ TASK_LOG : records
+  TASK_RUN ||--o{ AUDIT_EVENT : records
