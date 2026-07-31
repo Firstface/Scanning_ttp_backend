@@ -1,0 +1,48 @@
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 396B 0.0s done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/eclipse-temurin:17-jre-jammy
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context:
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [stage-1 1/6] FROM docker.io/library/eclipse-temurin:17-jre-jammy@sha256:475d8e96b4b2bfe08999e5e854755c773af1581acdf959a4545d88f0696a2339
+#4 resolve docker.io/library/eclipse-temurin:17-jre-jammy@sha256:475d8e96b4b2bfe08999e5e854755c773af1581acdf959a4545d88f0696a2339 done
+#4 DONE 0.0s
+
+#5 [stage-1 2/6] WORKDIR /app
+#5 CACHED
+
+#6 [stage-1 3/6] RUN apt-get update && apt-get install -y --no-install-recommends wget && apt-get clean
+#6 CACHED
+
+#7 [stage-1 4/6] RUN groupadd --system app && useradd --system --gid app --create-home app
+#7 CACHED
+
+#8 [internal] load build context
+#8 transferring context: 62.71MB 0.6s done
+#8 DONE 0.6s
+
+#9 [5/6] COPY target/scanning_ttp_backend-0.0.1-SNAPSHOT.jar /app/app.jar
+#9 DONE 1.9s
+
+#10 [6/6] RUN chown app:app /app/app.jar
+#10 DONE 0.7s
+
+#11 exporting to image
+#11 exporting layers
+#11 exporting layers 1.6s done
+#11 exporting manifest sha256:57926e99c1c072f65da5b3a9270b2e7ea251d879a34683854666eb746a14589b 0.0s done
+#11 exporting config sha256:f22ea64c9c6386864f5cd3be33010c8fdc377e0a7994f238d535cca5c79d8dee 0.0s done
+#11 exporting attestation manifest sha256:1d5588e66a6c93ad7f53cc7719c59abc4a3f265754681a404ba51462efa17563 0.0s done
+#11 exporting manifest list sha256:ad595d0484d9301e5f99e333a90488bf81a622d616d9324be3418872b2c56f0a done
+#11 naming to docker.io/library/scanning-ttp-backend:runtime-verify-20260731-151840 done
+#11 unpacking to docker.io/library/scanning-ttp-backend:runtime-verify-20260731-151840
+#11 unpacking to docker.io/library/scanning-ttp-backend:runtime-verify-20260731-151840 1.3s done
+#11 DONE 3.0s

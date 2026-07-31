@@ -1,0 +1,6 @@
+timestamp=20260731-151840
+docker_build_console=reports/security/docker-build-runtime-verify-20260731-151840.console.txt
+docker_build_exit_code=0
+trivy_image_json=reports/security/trivy-image-runtime-verify-20260731-151840.json
+trivy_image_console=reports/security/trivy-image-runtime-verify-20260731-151840.console.txt
+trivy_image_exit_code=0
