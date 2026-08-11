@@ -22,6 +22,8 @@
         <jacoco.version>0.8.14</jacoco.version>
         <jackson-bom.version>2.21.4</jackson-bom.version>
         <spring-framework.version>6.2.19</spring-framework.version>
+        <micrometer.version>1.15.12</micrometer.version>
+        <spring-data-bom.version>2025.0.12</spring-data-bom.version>
         <!-- Explicitly set Tomcat version to the fixed version -->
         <tomcat.version>10.1.55</tomcat.version>
     </properties>

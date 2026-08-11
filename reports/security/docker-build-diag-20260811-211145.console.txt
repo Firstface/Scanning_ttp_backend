@@ -1,0 +1,94 @@
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 823B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/eclipse-temurin:17-jre-jammy
+#2 DONE 0.1s
+
+#3 [internal] load metadata for docker.io/library/maven:3.9-eclipse-temurin-17
+#3 DONE 0.1s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 2B done
+#4 DONE 0.0s
+
+#5 [builder 1/6] FROM docker.io/library/maven:3.9-eclipse-temurin-17@sha256:1ed5d1f54416b706707b4f3238f63a20bb06aab27c6d240090a2bb9ad895ed45
+#5 resolve docker.io/library/maven:3.9-eclipse-temurin-17@sha256:1ed5d1f54416b706707b4f3238f63a20bb06aab27c6d240090a2bb9ad895ed45 0.0s done
+#5 DONE 0.0s
+
+#6 [stage-1 1/6] FROM docker.io/library/eclipse-temurin:17-jre-jammy@sha256:89e68b9bb83713510b63e2059a415792a7fc77e14b739a7d7ede97f6d9ca2c38
+#6 resolve docker.io/library/eclipse-temurin:17-jre-jammy@sha256:89e68b9bb83713510b63e2059a415792a7fc77e14b739a7d7ede97f6d9ca2c38 0.0s done
+#6 DONE 0.0s
+
+#7 [internal] load build context
+#7 transferring context: 10.32kB 0.0s done
+#7 DONE 0.0s
+
+#8 [builder 2/6] WORKDIR /app
+#8 CACHED
+
+#9 [builder 4/6] RUN mvn dependency:go-offline -B
+#9 CACHED
+
+#10 [builder 3/6] COPY pom.xml .
+#10 CACHED
+
+#11 [builder 5/6] COPY src ./src
+#11 CACHED
+
+#12 [builder 6/6] RUN mvn clean package -DskipTests -B
+#12 CACHED
+
+#13 [stage-1 2/6] WORKDIR /app
+#13 DONE 0.3s
+
+#14 [stage-1 3/6] RUN apt-get update && apt-get install -y --no-install-recommends wget && apt-get clean
+#14 1.011 Get:1 http://ports.ubuntu.com/ubuntu-ports jammy InRelease [270 kB]
+#14 3.200 Get:2 http://ports.ubuntu.com/ubuntu-ports jammy-updates InRelease [128 kB]
+#14 3.720 Get:3 http://ports.ubuntu.com/ubuntu-ports jammy-backports InRelease [127 kB]
+#14 4.244 Get:4 http://ports.ubuntu.com/ubuntu-ports jammy-security InRelease [129 kB]
+#14 4.766 Get:5 http://ports.ubuntu.com/ubuntu-ports jammy/restricted arm64 Packages [24.2 kB]
+#14 4.795 Get:6 http://ports.ubuntu.com/ubuntu-ports jammy/universe arm64 Packages [17.2 MB]
+#14 59.92 Get:7 http://ports.ubuntu.com/ubuntu-ports jammy/main arm64 Packages [1,758 kB]
+#14 71.30 Get:8 http://ports.ubuntu.com/ubuntu-ports jammy/multiverse arm64 Packages [224 kB]
+#14 72.43 Get:9 http://ports.ubuntu.com/ubuntu-ports jammy-updates/main arm64 Packages [4,320 kB]
+#14 82.03 Get:10 http://ports.ubuntu.com/ubuntu-ports jammy-updates/universe arm64 Packages [1,692 kB]
+#14 84.74 Get:11 http://ports.ubuntu.com/ubuntu-ports jammy-updates/multiverse arm64 Packages [69.7 kB]
+#14 84.76 Get:12 http://ports.ubuntu.com/ubuntu-ports jammy-updates/restricted arm64 Packages [7,873 kB]
+#14 93.02 Get:13 http://ports.ubuntu.com/ubuntu-ports jammy-backports/universe arm64 Packages [33.7 kB]
+#14 93.31 Get:14 http://ports.ubuntu.com/ubuntu-ports jammy-backports/main arm64 Packages [82.4 kB]
+#14 93.37 Get:15 http://ports.ubuntu.com/ubuntu-ports jammy-security/main arm64 Packages [4,002 kB]
+#14 96.21 Get:16 http://ports.ubuntu.com/ubuntu-ports jammy-security/multiverse arm64 Packages [62.9 kB]
+#14 96.25 Get:17 http://ports.ubuntu.com/ubuntu-ports jammy-security/universe arm64 Packages [1,397 kB]
+#14 97.39 Get:18 http://ports.ubuntu.com/ubuntu-ports jammy-security/restricted arm64 Packages [7,571 kB]
+#14 103.1 Fetched 47.0 MB in 1min 43s (456 kB/s)
+#14 103.1 Reading package lists...
+#14 103.6 Reading package lists...
+#14 104.1 Building dependency tree...
+#14 104.2 Reading state information...
+#14 104.3 wget is already the newest version (1.21.2-2ubuntu1.4).
+#14 104.3 0 upgraded, 0 newly installed, 0 to remove and 2 not upgraded.
+#14 DONE 104.4s
+
+#15 [stage-1 4/6] RUN groupadd --system app && useradd --system --gid app --create-home app
+#15 DONE 0.2s
+
+#16 [stage-1 5/6] COPY --from=builder /app/target/*.jar app.jar
+#16 DONE 0.2s
+
+#17 [stage-1 6/6] RUN chown app:app /app/app.jar
+#17 DONE 0.2s
+
+#18 exporting to image
+#18 exporting layers
+#18 exporting layers 1.5s done
+#18 exporting manifest sha256:40983bae3d0ec7c86b6764adf805596784903d1e06ae5dd541a630b09cdd9b7b done
+#18 exporting config sha256:04978fe3b5284995028faf84ede42050b911d859f0f6e3766e62f8d97be714d4 done
+#18 exporting attestation manifest sha256:bc49ce7e21ff781f477298323031fa30b49457c7a4ceeb015e37c788572bf671 done
+#18 exporting manifest list sha256:2a0d700c40b653adb4e234f06f39a8d0fb32fc2ade527d1094c95ebe2ac09489 done
+#18 naming to docker.io/library/scanning-ttp-backend:trivy-diag-20260811-211145 done
+#18 unpacking to docker.io/library/scanning-ttp-backend:trivy-diag-20260811-211145
+#18 unpacking to docker.io/library/scanning-ttp-backend:trivy-diag-20260811-211145 0.8s done
+#18 DONE 2.3s

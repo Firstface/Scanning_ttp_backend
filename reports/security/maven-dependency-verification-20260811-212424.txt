@@ -1,0 +1,21 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ------------------< com.example:scanning_ttp_backend >------------------
+[INFO] Building scanning_ttp_backend 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- dependency:3.8.1:tree (default-cli) @ scanning_ttp_backend ---
+[INFO] com.example:scanning_ttp_backend:jar:0.0.1-SNAPSHOT
+[INFO] +- org.springframework.boot:spring-boot-starter-actuator:jar:3.5.14:compile
+[INFO] |  \- io.micrometer:micrometer-jakarta9:jar:1.15.12:compile
+[INFO] |     \- io.micrometer:micrometer-core:jar:1.15.12:compile
+[INFO] \- org.springframework.boot:spring-boot-starter-data-jpa:jar:3.5.14:compile
+[INFO]    \- org.springframework.data:spring-data-jpa:jar:3.5.12:compile
+[INFO]       \- org.springframework.data:spring-data-commons:jar:3.5.12:compile
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  1.309 s
+[INFO] Finished at: 2026-08-11T21:24:13+08:00
+[INFO] ------------------------------------------------------------------------
