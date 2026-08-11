@@ -17,6 +17,8 @@ public class WebConfig {
         config.addAllowedOrigin("http://127.0.0.1:4173");
         config.addAllowedOrigin("http://localhost:3000");
         config.addAllowedOrigin("http://127.0.0.1:3000");
+        config.addAllowedOrigin("http://localhost:8088");
+        config.addAllowedOrigin("http://127.0.0.1:8088");
         config.addAllowedOrigin("https://localhost");
         config.addAllowedOrigin("https://127.0.0.1");
         config.addAllowedHeader("*");

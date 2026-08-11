@@ -2,3 +2,5 @@
 .venv-semgrep/
 reports/jacoco/
 target/site/jacoco/
+tests/e2e/node_modules/
+reports/security/zap/
